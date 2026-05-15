@@ -1,0 +1,1018 @@
+<% layout("/layouts/boilerplate") %>
+
+<head>
+   
+    <style>
+        /* Additional custom styles to match ClassiList theme */
+        .post-ad-form {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: -80px;
+            margin-bottom: 30px;
+            z-index: 10;
+            position: relative;
+
+        }
+
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            border: 1px solid #e0e0e0;
+            padding: 12px;
+            border-radius: 5px;
+        }
+
+        .submit-btn {
+            background-color: #ff6b6b;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #ff6b6b;
+            color: white;
+        }
+
+        .price-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+
+
+
+
+        .radio-inputs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            width: 100%;
+            font-size: 15px;
+        }
+        
+        .radio-inputs .radio {
+            flex: 1 1 auto;
+            max-width: calc(33.33% - 0.5rem); /* Adjust for spacing */
+            text-align: center;
+            margin: 0;
+        }
+        
+        .radio-inputs .radio input {
+            display: none;
+        }
+        
+        .radio-inputs .radio .name {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            font-weight: 500;
+    
+            border: 2px solid transparent;
+            transition: all 0.2s ease-in-out;
+        }
+        
+        .radio-inputs .radio .name:hover {
+            background-color: #ffd6d6;
+            border-color: #ff6b6b;
+        }
+        
+        .radio-inputs .radio input:checked + .name {
+            background-color: #ff6b6b;
+            color: white;
+            font-weight: 600;
+            border-color: #ff4c4c;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+        }
+        
+
+
+
+
+
+
+
+
+
+
+
+        /* Image upload preview styles */
+        .image-upload-container {
+            border: 2px dashed #e0e0e0;
+            padding: 20px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .image-upload-container:hover {
+            background-color: #f5f5f5;
+        }
+
+        .image-preview-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .image-preview {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-preview-remove {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: rgba(255, 0, 0, 0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .image-upload-container input[type="file"] {
+            display: none;
+        }
+
+        .custom-file-upload {
+            display: inline-block;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #ff6b6b;
+            color: white;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        #locationSuggestions {
+            margin-top: 5px;
+            border-radius: 4px;
+            max-height: 200px;
+            overflow-y: auto;
+            position: absolute;
+            background: white;
+            width: calc(100% - 2px);
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #locationSuggestions li {
+            padding: 8px 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+        }
+
+        #locationSuggestions li:hover {
+            background-color: #f5f5f5;
+        }
+
+        #newLocationDiv {
+            position: relative;
+        }
+
+        .error-message {
+            color: red;
+            padding: 10px;
+            margin: 5px 0;
+        }
+
+        .loading-message {
+            color: #666;
+            padding: 10px;
+            margin: 5px 0;
+        }
+
+        .location-field {
+            cursor: not-allowed;
+        }
+
+        .review-details-container {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .review-profile {
+            margin-right: 15px;
+        }
+
+        .profile-photo {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .review-info p {
+            margin: 0;
+            font-size: 14px;
+        }
+    </style>
+
+</head>
+
+<body>
+   
+
+    <!--====== BANNER PART START ======-->
+    <section class="banner-area bg_cover">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="banner-content">
+                        <h1 class="text-white">Post Ad</h1>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Post Ad</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--====== BANNER PART END ======-->
+
+    <!--====== POST AD FORM START ======-->
+    <section class="post-ad-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-md-10">
+                    <form method="POST" action="/product" enctype="multipart/form-data" class="post-ad-form"
+                        id="postAdForm">
+                        <div class="form-section">
+                            <h2 class="mb-4">POST YOUR AD</h2>
+                            <hr class="row">
+                            <div class="col-md-12 form-group mb-3">
+                                <label>Categories</label>
+                                <select class="form-control" name="category" id="category"
+                                    onchange="updateCategoryFields()">
+                                    <option value="">Select a Category</option>
+                                    <option value="car/bike">Car/Bike</option>
+                                    <option value="electronics">Electronics</option>
+                                    <option value="fashion">Fashion</option>
+                                    <option value="property">Property</option>
+                                    <option value="pet">Pet</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+
+
+                            <!-- Dynamic Fields Container -->
+                            <div id="dynamicFields"></div>
+
+
+
+                            <div class="col-md-12 form-group mb-3">
+                                <label>Ad Title</label>
+                                <input type="text" class="form-control" name="title" placeholder="Enter Ad Title"
+                                    required>
+                            </div>
+                            <div class="col-md-12 form-group mb-3">
+                                <label>Description</label>
+                                <textarea class="form-control" name="description" rows="5"
+                                    placeholder="Describe your ad here..." required></textarea>
+                            </div>
+                            <div class="col-md-12 form-group mb-3">
+                                <label>Price (₹)</label>
+                                <div class="price-input">
+                                    <input type="number" class="form-control" name="price" placeholder="Enter Price">
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-12 form-group mb-3">
+                                <label>Images</label>
+                                <div class="image-upload-container">
+                                    <input type="file" id="images" name="images" multiple accept="image/*">
+                                    <label for="images" class="custom-file-upload">
+                                        <i class="fa fa-cloud-upload"></i> Choose Images
+                                    </label>
+                                    <p class="text-muted mt-2">Upload up to 20 photos, each under 3MB</p>
+                                    <div id="image-preview" class="image-preview-wrapper"></div>
+                                </div>
+                            </div>
+
+
+
+
+
+                            <!-- Location Section -->
+                            <div class="col-md-12 form-group mb-3">
+                                <label for="locationType">Location:</label>
+                                <select id="locationType" name="locationType" class="form-control" required
+                                    onchange="toggleLocationFields()">
+                                    <option value="existing">Use Existing Location</option>
+                                    <option value="new">Add New Location</option>
+                                </select>
+                            </div>
+
+                            <!-- Existing Location Dropdown -->
+                            <div class="col-md-12 form-group mb-3" id="existingLocationDiv" style="display: none;">
+                                <label for="locationID">Select Existing Location:</label>
+                                <select id="locationID" name="locationID" class="form-control">
+
+
+                                    <% for (location of locations) { %>
+                                        <option value="<%= location._id %>">
+                                            <%= location.area %>, <%= location.city %>, <%= location.state %>, <%=
+                                                            location.country %>,<%= location.zipCode %>
+                                        </option>
+                                        <% } %>
+
+
+
+                                </select>
+                            </div>
+
+                            <!-- New Location Fields -->
+                            <div class="col-md-12 form-group mb-3" id="newLocationDiv" style="display: none;">
+                                <label for="autocomplete">Search Location:</label>
+                                <input type="text" id="autocomplete" class="form-control" placeholder="Enter a location"
+                                    oninput="fetchLocationSuggestions()">
+                                <ul id="locationSuggestions" class="list-group"></ul>
+
+                                <label for="newCountry">Country:</label>
+                                <input type="text" id="newCountry" name="newLocation[country]"
+                                    class="form-control location-field" readonly>
+
+                                <label for="newState">State:</label>
+                                <input type="text" id="newState" name="newLocation[state]"
+                                    class="form-control location-field" readonly>
+
+                                <label for="newCity">City:</label>
+                                <input type="text" id="newCity" name="newLocation[city]"
+                                    class="form-control location-field" readonly>
+
+                                <label for="newArea">Area:</label>
+                                <input type="text" id="newArea" name="newLocation[area]"
+                                    class="form-control location-field" readonly>
+
+                                <label for="newZipCode">Zip Code:</label>
+                                <input type="number" id="newZipCode" name="newLocation[zipCode]"
+                                    class="form-control location-field" readonly>
+
+                                <!-- Hidden Fields for Latitude and Longitude -->
+                                <input type="hidden" id="newLatitude" name="newLocation[latitude]">
+                                <input type="hidden" id="newLongitude" name="newLocation[longitude]">
+                            </div>
+
+                            <hr>
+
+                            <!-- Review Your Details -->
+                            <div class="col-md-12 form-group mb-3">
+                                <h4>Review Your Details</h4>
+                                <div class="review-details-container">
+                                    <div class="review-profile">
+                                        <img src="<%= user.photo.url %>" alt="User Profile Photo" class="profile-photo">
+                                    </div>
+                                    <div class="review-info">
+                                        <p><strong>Name:</strong>
+                                            <%= user.username %>
+                                        </p>
+                                        <p><strong>Phone Number:</strong>
+                                            <%= user.phone %>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="text-center">
+                                <button type="submit" class="main-btn btn-hover">Post Ad</button>
+                            </div>
+
+                        </div>
+                </div>
+
+
+
+            </div>
+
+            </form>
+        </div>
+        </div>
+        </div>
+    </section>
+    <!--====== POST AD FORM END ======-->
+
+    
+
+    <script>
+        function updateCategoryFields() {
+            const category = document.getElementById("category").value;
+            const dynamicFields = document.getElementById("dynamicFields");
+
+            // Clear previous fields
+            dynamicFields.innerHTML = "";
+
+            // Add fields based on category
+            if (category === "car/bike") {
+                dynamicFields.innerHTML = `
+					<div class="form-section">
+						<h2 class="mb-4">Vehicle Details</h2>
+						<div class="row">
+							<div class="col-md-6 form-group mb-3">
+								<label for="brandName">Brand Name:</label>
+								<input type="text" class="form-control" id="brandName" name="categoryData[brandName]" required> 
+							</div> 
+
+							<div class="col-md-6 form-group mb-3">
+								<label for="modelName">Model Name:</label>
+								<input type="text" class="form-control" id="modelName" name="categoryData[modelName]" required>
+							</div>
+							<div class="col-md-6 form-group mb-3">
+								<label for="variantName">Variant Name:</label>
+								<input type="text" class="form-control" id="variantName" name="categoryData[variantName]" required>
+							</div>
+							<div class="col-md-6 form-group mb-3">
+								<label for="year">Year:</label>
+								<input type="number" class="form-control" id="year" name="categoryData[year]" min="1800" max="2025" required>
+							</div>
+							<div class="col-md-6 form-group mb-3">
+								<label for="kmDrived">KM Driven:</label>
+								<input type="number" class="form-control" id="kmDrived" name="categoryData[kmDrived]" required>
+							</div>
+							<div class="col-md-12 form-group mb-3">
+								<label>Fuel Type:</label>
+								<div class="radio-inputs">
+									<label class="radio">
+										<input type="radio" name="categoryData[fuel]" value="petrol" checked>
+										<span class="name">Petrol</span>
+									</label>
+									<label class="radio">
+										<input type="radio" name="categoryData[fuel]" value="diesel">
+										<span class="name">Diesel</span>
+									</label>
+									<label class="radio">
+										<input type="radio" name="categoryData[fuel]" value="electric">
+										<span class="name">Electric</span>
+									</label>
+									<label class="radio">
+										<input type="radio" name="categoryData[fuel]" value="cng & hybrids">
+										<span class="name">CNG & Hybrids</span>
+									</label>
+									<label class="radio">
+										<input type="radio" name="categoryData[fuel]" value="lpg">
+										<span class="name">LPG</span>
+									</label>
+								</div>
+							</div>
+							<div class="col-md-12 form-group mb-3">
+								<label>Transmission:</label>
+								<div class="radio-inputs">
+									<label class="radio">
+										<input type="radio" name="categoryData[transmission]" value="automatic" checked>
+										<span class="name">Automatic</span>
+									</label>
+									<label class="radio">
+										<input type="radio" name="categoryData[transmission]" value="manual">
+										<span class="name">Manual</span>
+									</label>
+								</div>
+							</div>
+							<div class="col-md-12 form-group mb-3">
+								<label for="age">Age:</label>
+								<input type="number" class="form-control" id="age" name="categoryData[age]" required>
+							</div>
+							<div class="col-md-6 form-group mb-3">
+								<label>Number of Owners:</label>
+								<div class="radio-inputs">
+									<label class="radio">
+										<input type="radio" name="categoryData[noOfOwners]" value="1" checked>
+										<span class="name">1</span>
+									</label>
+									<label class="radio">
+										<input type="radio" name="categoryData[noOfOwners]" value="2">
+										<span class="name">2</span>
+									</label>
+									<label class="radio">
+										<input type="radio" name="categoryData[noOfOwners]" value="3">
+										<span class="name">3</span>
+									</label>
+									<label class="radio">
+										<input type="radio" name="categoryData[noOfOwners]" value="4">
+										<span class="name">4</span>
+									</label>
+									<label class="radio">
+										<input type="radio" name="categoryData[noOfOwners]" value="5">
+										<span class="name">4+</span>
+									</label>
+								</div>
+							</div>
+						</div>
+					</div> 
+                    <hr>
+				`;
+            } else if (category === "electronics") {
+                dynamicFields.innerHTML = `
+					<div class="form-section">
+						<h2 class="mb-4">Electronics Details</h2>
+						<div class="row">
+							<div class="col-md-6 form-group mb-3">
+								<label for="brandName">Brand Name:</label>
+								<input type="text" class="form-control" id="brandName" name="categoryData[brandName]" required>
+							</div>
+							<div class="col-md-6 form-group mb-3">
+								<label for="modelName">Model Name:</label>
+								<input type="text" class="form-control" id="modelName" name="categoryData[modelName]" required>
+							</div>
+							<div class="col-md-6 form-group mb-3">
+								<label for="year">Year:</label>
+								<input type="number" class="form-control" id="year" name="categoryData[year]" min="1970" max="2025" required>
+							</div>
+                                <div class="col-md-6 form-group mb-3">
+                                    <label for="warranty">Warranty:</label>
+                                    <input type="text" class="form-control" id="warranty" name="categoryData[warranty]" required>
+                                </div>
+                                <div class="col-md-12 form-group mb-3">
+                                    <label for="condition">Condition:</label>
+                                    <select class="form-control" id="age" name="categoryData[age]" required>
+                                        <option value="">Select condition</option> 
+                                        <option value="1">1yr old</option>
+                                        <option value="2">2yr old</option>
+                                        <option value="3">3yr old</option>
+                                        <option value="4">4yr old</option>
+                                        <option value="5">4+yr old</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    `;
+            } else if (category === "fashion") {
+                dynamicFields.innerHTML = `
+                        <div class="form-section">
+                            <h2 class="mb-4">Fashion Details</h2>
+                            <div class="col-md-12 form-group mb-3">
+                                <label for="type">Type:</label>
+                                <select class="form-control" id="type" name="categoryData[type]" required>
+                                    <option value="men">Men</option>
+                                    <option value="women">Women</option>
+                                    <option value="kids">Kids</option>
+                                </select>
+                            </div>
+                        </div>
+                        <hr>
+                    `;
+            } else if (category === "property") {
+                dynamicFields.innerHTML = `
+                        <div class="form-section">
+                            <h2 class="mb-4">Property Details</h2>
+                            <div class="row">
+                                <div class="col-md-12 form-group mb-3">
+                                    <label>Property Type:</label>
+                                    <div class="radio-inputs">
+                                        <label class="radio">
+                                            <input type="radio" name="categoryData[type]" value="apartment" checked>
+                                            <span class="name">Apartment</span>
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" name="categoryData[type]" value="villa">
+                                            <span class="name">Villa</span>
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" name="categoryData[type]" value="independent house">
+                                            <span class="name">Independent House</span>
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" name="categoryData[type]" value="plot">
+                                            <span class="name">Plot</span>
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" name="categoryData[type]" value="commercial">
+                                            <span class="name">Commercial</span>
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" name="categoryData[type]" value="other">
+                                            <span class="name">Other</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 form-group mb-3">
+                                    <label>BHK:</label>
+                                    <div class="radio-inputs">
+                                        <label class="radio">
+                                            <input type="radio" name="categoryData[bhk]" value="1" checked>
+                                            <span class="name">1</span>
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" name="categoryData[bhk]" value="2">
+                                            <span class="name">2</span>
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" name="categoryData[bhk]" value="3">
+                                            <span class="name">3</span>
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" name="categoryData[bhk]" value="4">
+                                            <span class="name">4</span>
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" name="categoryData[bhk]" value="5">
+                                            <span class="name">4+</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 form-group mb-3">
+                                    <label>Bathrooms:</label>
+                                    <div class="radio-inputs">
+                                        <label class="radio">
+                                            <input type="radio" name="categoryData[bathrooms]" value="1" checked>
+                                            <span class="name">1</span>
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" name="categoryData[bathrooms]" value="2">
+                                            <span class="name">2</span>
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" name="categoryData[bathrooms]" value="3">
+                                            <span class="name">3</span>
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" name="categoryData[bathrooms]" value="4">
+                                            <span class="name">4</span>
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" name="categoryData[bathrooms]" value="5">
+                                            <span class="name">4+</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 form-group mb-3">
+                                    <label>Furnishing:</label>
+                                    <div class="radio-inputs">
+                                        <label class="radio">
+                                            <input type="radio" name="categoryData[furnishing]" value="furnished" checked>
+                                            <span class="name">Furnished</span>
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" name="categoryData[furnishing]" value="semi-furnished">
+                                            <span class="name">Semi-Furnished</span>
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" name="categoryData[furnishing]"  value="unfurnished">
+                                            <span class="name">Unfurnished</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 form-group mb-3">
+                                    <label for="areaSqft">Area (in sq. ft):</label>
+                                    <input type="number" class="form-control" id="areaSqft" name="categoryData[areaSqft]" required min="0">
+                                </div>
+                                <div class="col-md-6 form-group mb-3">
+                                    <label for="carpetAreaSqft">Carpet Area (in sq. ft):</label>
+                                    <input type="number" class="form-control" id="carpetAreaSqft" name="categoryData[carpetAreaSqft]" min="0">
+                                </div>
+                                <div class="col-md-6 form-group mb-3">
+                                    <label for="total_floors">Total Floors:</label>
+                                    <input type="number" class="form-control" id="totalFloors" name="categoryData[totalFloors]" required min="0">
+                                </div>
+                                <div class="col-md-12 form-group mb-3">
+                                    <label>Bachelors Allowed:</label>
+                                    <div class="radio-inputs">
+                                        <label class="radio">
+                                            <input type="radio" name="categoryData[bachelorsAllowed]" value="true" checked>
+                                            <span class="name">Yes</span>
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" name="categoryData[bachelorsAllowed]" value="false">
+                                            <span class="name">No</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 form-group mb-3">
+                                    <label>Car Parking Space:</label>
+                                    <div class="radio-inputs">
+                                        <label class="radio">
+                                            <input type="radio" name="categoryData[carParkingSpace]" value="1" checked>
+                                            <span class="name">1</span>
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" name="categoryData[carParkingSpace]" value="2">
+                                            <span class="name">2</span>
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" name="categoryData[carParkingSpace]" value="3">
+                                            <span class="name">3</span>
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" name="categoryData[carParkingSpace]" value="0">
+                                            <span class="name">No Parking</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 form-group mb-3">
+                                    <label>Facing:</label>
+                                    <select class="form-control" name="categoryData[facing]">
+                                        <option value="">Select Facing</option>
+                                        <option value="north">North</option>
+                                        <option value="south">South</option>
+                                        <option value="east">East</option>
+                                        <option value="west">West</option>
+                                        <option value="northeast">Northeast</option>
+                                        <option value="northwest">Northwest</option>
+                                        <option value="southeast">Southeast</option>
+                                        <option value="southwest">Southwest</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-12 form-group mb-3">
+                                    <label>Want to:</label>
+                                    <select class="form-control" name="categoryData[type2]">
+                                        <option value="">Select Type</option>
+                                        <option value="rent">Rent</option>
+                                        <option value="sell">Sell</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    `;
+            } else if (category === "pet") {
+                dynamicFields.innerHTML = `
+                        <div class="form-section">
+                            <h2 class="mb-4">Pet Details</h2>
+                            <div class="col-md-12 form-group mb-3">
+                                <label for="type">Type:</label>
+                                <select class="form-control" id="type" name="categoryData[type]" required>
+                                    <option value="dogs">Dogs</option>
+                                    <option value="cats">Cats</option>
+                                    <option value="fishes & aquarium">Fishes & Aquarium</option>
+                                    <option value="birds">Birds</option>
+                                    <option value="others">Others</option>
+                                </select>
+                            </div>
+                        </div>
+                        <hr>
+                    `;
+            } else if (category === "other") {
+                dynamicFields.innerHTML = `
+                        <div class="form-section">
+                            <h2 class="mb-4">Other Details</h2>
+                            <div class="col-md-12 form-group mb-3">
+                                <label for="type">Type:</label>
+                                <select class="form-control" id="type" name="categoryData[type]" required>
+                                    <option value="books">Books</option>
+                                    <option value="musical equipments">Musical Equipments</option>
+                                    <option value="sports equipments">Sports Equipments</option>
+                                    <option value="gym & fitness">Gym & Fitness</option>
+                                    <option value="others">Others</option>
+                                </select>
+                            </div>
+                        </div>
+                        <hr>
+                    `;
+            }
+        }
+
+
+
+    </script>
+
+
+
+    <script>
+        // Image upload preview script
+        document.getElementById('images').addEventListener('change', function (event) {
+            const imagePreviewContainer = document.getElementById('image-preview');
+            imagePreviewContainer.innerHTML = ''; // Clear previous previews
+
+            const files = event.target.files;
+            const maxFiles = 20;
+
+            // Limit to 5 files
+            const limitedFiles = Array.from(files).slice(0, maxFiles);
+
+            limitedFiles.forEach((file, index) => {
+                if (file.type.match('image.*')) {
+                    const reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        const previewWrapper = document.createElement('div');
+                        previewWrapper.className = 'image-preview';
+
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+
+                        const removeBtn = document.createElement('button');
+                        removeBtn.className = 'image-preview-remove';
+                        removeBtn.innerHTML = '&times;';
+                        removeBtn.onclick = function () {
+                            previewWrapper.remove();
+                            // Remove the corresponding file from the input
+                            const dt = new DataTransfer();
+                            const input = document.getElementById('images');
+                            const { files } = input;
+
+                            for (let i = 0; i < files.length; i++) {
+                                const file = files[i];
+                                if (file !== limitedFiles[index]) {
+                                    dt.items.add(file);
+                                }
+                            }
+
+                            input.files = dt.files;
+                        };
+
+                        previewWrapper.appendChild(img);
+                        previewWrapper.appendChild(removeBtn);
+                        imagePreviewContainer.appendChild(previewWrapper);
+                    };
+
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+    </script>
+
+
+
+
+
+
+
+
+    <script>
+        // Your LocationIQ API key
+        const key = 'pk.b74dc803d9f251195082b464c2311b5c';
+        // Function to handle API errors
+        function handleApiError(error) {
+            console.error('API Error:', error);
+            const suggestions = document.getElementById('locationSuggestions');
+            suggestions.innerHTML = '<li class="error-message">Error fetching locations. Please try again.</li>';
+        }
+
+        // Debounce function to limit API calls
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Function to toggle location fields
+        function toggleLocationFields() {
+            const locationType = document.getElementById('locationType').value;
+            document.getElementById('existingLocationDiv').style.display =
+                locationType === 'existing' ? 'block' : 'none';
+            document.getElementById('newLocationDiv').style.display =
+                locationType === 'new' ? 'block' : 'none';
+        }
+
+        // Function to fetch location suggestions
+        const fetchLocationSuggestions = debounce(function () {
+            const input = document.getElementById('autocomplete').value;
+            const suggestions = document.getElementById('locationSuggestions');
+
+            if (input.length < 3) {
+                suggestions.innerHTML = '';
+                return;
+            }
+
+            suggestions.innerHTML = '<li class="loading-message">Searching...</li>';
+
+            const encodedInput = encodeURIComponent(input);
+            const url = `https://api.locationiq.com/v1/autocomplete.php?key=${key}&q=${encodedInput}&format=json&limit=5&addressdetails=1`;
+
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (!Array.isArray(data)) {
+                        throw new Error('Invalid response format');
+                    }
+
+                    if (data.length === 0) {
+                        suggestions.innerHTML = '<li class="loading-message">No locations found</li>';
+                        return;
+                    }
+
+                    let suggestionsHtml = '';
+                    data.forEach(location => {
+                        const escapedDisplayName = location.display_name
+                            .replace(/'/g, "\\'")
+                            .replace(/"/g, '\\"');
+
+                        suggestionsHtml += `
+                            <li onclick="selectLocation('${escapedDisplayName}', '${location.lat}', '${location.lon}')">
+                                ${location.display_name}
+                            </li>`;
+                    });
+                    suggestions.innerHTML = suggestionsHtml;
+                })
+                .catch(handleApiError);
+        }, 300);
+
+        // Function to handle location selection
+        function selectLocation(displayName, lat, lon) {
+            document.getElementById('autocomplete').value = displayName;
+            document.getElementById('locationSuggestions').innerHTML = '';
+
+            // Fill latitude and longitude fields
+            document.getElementById('newLatitude').value = lat;
+            document.getElementById('newLongitude').value = lon;
+
+            const url = `https://api.locationiq.com/v1/reverse.php?key=${key}&lat=${lat}&lon=${lon}&format=json`;
+
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const area = data.address || {};
+
+                    document.getElementById('newCountry').value = area.country || '';
+                    document.getElementById('newState').value = area.state || area.province || '';
+                    document.getElementById('newCity').value = area.city || area.town || area.village || '';
+                    document.getElementById('newArea').value = [
+                        area.road,
+                        area.house_number,
+                        area.suburb
+                    ].filter(Boolean).join(', ');
+                    document.getElementById('newZipCode').value = area.postcode || '';
+                })
+                .catch(error => {
+                    console.error('Error in reverse geocoding:', error);
+                    alert('Error fetching location details. Please try again.');
+                });
+        }
+
+
+        // Initialize the form
+        document.addEventListener('DOMContentLoaded', function () {
+            toggleLocationFields();
+        });
+    </script>
+
+
+    <!--====== Bootstrap JS ======-->
+    <script src="/js/bootstrap.bundle-5.0.5-alpha.min.js"></script>
+
+      
+<script> 
+    window.onscroll = function () {
+        const header = document.getElementById("header_navbar");
+        const sticky = header.offsetTop;
+    
+        if (window.pageYOffset > sticky) {
+            header.classList.add("sticky");
+        } else {
+            header.classList.remove("sticky");
+        }
+    };
+  </script>
+
+  
+
+</body>
+
+</html>

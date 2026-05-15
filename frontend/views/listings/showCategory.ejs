@@ -1,0 +1,500 @@
+<% layout("/layouts/boilerplate") %>
+
+<head>
+	<style>
+		/* Set a fixed height for product images */
+		.product-img img {
+			width: 100%;
+			height: 200px; /* Adjust this value to your preference */
+			object-fit: cover;
+			display: block;
+		}
+
+		.list-image{
+			width: 100%;
+			height: 200px; /* Adjust this value to your preference */
+			object-fit: cover;
+			display: block;
+		}
+		/* favourite-icon styling */
+
+		.favourite-icon {
+			background-color: white; /* White background for the circle */
+			border-radius: 50%; /* Makes it circular */
+			padding: 10px; /* Space around the icon */
+			color: #e63946; /* Heart color */
+			font-size: 11px; /* Adjust icon size */
+			display: inline-flex; /* Align the icon inside the circle */
+			align-items: center;
+			justify-content: center;
+			cursor: pointer;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional shadow for depth */
+			transition: background-color 0.3s, transform 0.2s;
+			margin-bottom: 10px;
+		}
+
+		.favourite-icon:hover {
+			background-color: #f8f9fa; /* Slightly darker background on hover */
+			transform: scale(1.1); /* Slight zoom effect on hover */
+		}
+
+			
+
+		.range-form {
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+		}
+		
+		.range-inputs-container {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			width: 100%;
+		}
+		
+		.range-input {
+			min-width: 65px;
+			padding: 8px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+		}
+		
+		.range-connector {
+			color: #666;
+			font-size: 16px;
+		}
+		
+		.apply-range-btn {
+			padding: 8px 15px;
+			background-color: #e6e9ed;
+			color: #666;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+			margin-bottom: 20px;
+		}
+		
+		.apply-range-btn:hover {
+			background-color: #d7dbe0;
+		}
+	</style>
+
+    </head>
+    
+
+<body>
+	
+
+
+	<!--====== BANNER PART START ======-->
+	<section class="banner-area bg_cover">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="banner-content">
+						<h1 class="text-white">All Categories</h1>
+						<nav aria-label="breadcrumb">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+								<li class="breadcrumb-item active" aria-current="page">Category</li>
+							</ol>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--====== BANNER PART END ======-->
+
+
+	<!--====== CATEGORY PART START ======-->
+	<section class="category-area pb-110">
+		<div class="container">
+			<!-- category top -->
+			<div class="category-top box-style">
+				<div class="row align-items-center">
+
+					<div class="col-md-6">
+						<div class="left-wrapper">
+							<div class="sorting" id="filter-category">
+								<label for="sort">Show items</label>
+								<select name="sort" id="sort">
+									<!-- <option value="0">Popular Items</option>
+									<option value="1">By Default</option> -->
+									<option value="2">Newest Items</option>
+								</select>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<div class="right-wrapper">
+							
+							<ul class="nav product-view-btns" id="myTab" role="tablist">
+								<li class="product-view-item" role="presentation">
+									<a class="product-view-btn" id="list-tab" data-toggle="tab" href="#list" role="tab" aria-controls="list"
+										aria-selected="true"><i class="lni lni-list"></i></a>
+								</li>
+								<li class="product-view-item" role="presentation">
+									<a class="product-view-btn active" id="grid-tab" data-toggle="tab" href="#grid" role="tab" aria-controls="grid"
+										aria-selected="false"><i class="lni lni-grid-alt"></i></a>
+								</li>
+							</ul>
+
+							<form method="get" action="/category/search#filter-category">
+
+								<!-- <input type="text" name="search" id="search" placeholder="Search"> -->
+                                <input type="text" name="query" id="search" placeholder="Product keyword" required>
+
+								<button><i class="lni lni-search-alt"></i></button>
+							</form>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+			<!-- category wrapper -->
+			<div class="category-wrapper">
+				<div class="row">
+					
+
+					<!-- left-wrapper  -->
+					<div class="col-lg-8">
+						<div class="left-wrapper">
+
+
+							<div class="tab-content" id="myTabContent">
+								<div class="tab-pane fade show active" id="grid" role="tabpanel" aria-labelledby="grid-tab">
+
+									<div class="row">
+										<% products.forEach(product => { %>
+											<% if (!product.isSold) { %>
+											<div class="col-lg-6 col-md-6" id="product-<%= product._id %>">
+												<div class="single-product">
+													<div class="product-img">
+														<a href="/product/<%= product._id %>#product-<%= product._id %>">
+															<!-- Dynamically display the first image of the product -->
+															<% if (product.images && product.images.length > 0) { %>
+																<img src="<%= product.images[0].url %>" alt="<%= product.title %>">
+															<% } else { %>
+																<img src="/images/default-placeholder.png" alt="No Image Available">
+															<% } %>
+														</a>
+														<div class="product-action">
+															<!-- Favourite functionality -->
+															<form method="POST" action="/addToFavourites#product-<%= product._id %>" id="favouriteForm">
+																<input type="hidden" name="productID" value="<%= product._id %>">
+																<button type="submit" style="background: none; border: none; padding: 0;">
+																	<% if (product.isFavourite) { %>
+																		<!-- Filled heart icon for favourites -->
+																		<i class="fa fa-heart favourite-icon favourite-selected"></i>
+																	<% } else { %>
+																		<!-- Outline heart icon for non-favourites -->
+																		<i class="fa fa-heart-o favourite-icon"></i>
+																	<% } %>
+																</button>
+															</form>
+															<!-- Share button remains unchanged -->
+															<a href="javascript:void(0)" class="share">
+																<i class="lni lni-share"></i>
+															</a>
+														</div>
+													</div>
+													<a href="/product/<%= product._id %>#product-<%= product._id %>">
+														<div class="product-content">
+															<h3 class="name">
+																<%= product.title %>
+															</h3>
+															<span class="update">Last Update: <%= product.updatedAt ? product.updatedAt.toLocaleString() : "N/A" %></span>
+															<ul class="address">
+																<li>
+																	<a href="javascript:void(0)"><i class="lni lni-calendar"></i> 
+																		<%= product.createdAt ? new Date(product.createdAt).toLocaleDateString() : "N/A" %>
+																	</a>
+																</li>
+																<li>
+																	<a href="javascript:void(0)"><i class="lni lni-map-marker"></i> 
+																		<% if (product.locationID) { %>
+																			<%= product.locationID.city %>, <%= product.locationID.state %>, <%= product.locationID.country %>
+																		<% } else { %>
+																			N/A
+																		<% } %>
+																	</a>
+																</li>
+																<li>
+																	<a href="javascript:void(0)"><i class="lni lni-user"></i> 
+																		<%= product.userID ? `${product.userID.username}` : "N/A" %>
+																	</a>
+																</li>
+															</ul>
+															<div class="product-bottom">
+																<h3 class="price">₹<%= product.price ? product.price.toLocaleString("en-IN") : "N/A" %></h3>
+															</div>
+														</div>
+													</a>
+												</div>
+											</div>
+											<% } %>
+										<% }) %>
+									</div>
+									
+
+								</div>
+
+
+								<div class="tab-pane fade" id="list" role="tabpanel" aria-labelledby="list-tab">
+
+									<div class="row">
+										<% products.forEach(product => { %>
+					
+											<% if (!product.isSold) { %>
+										<div class="col-lg-12">
+											<div class="single-product list-view">
+												<div class="product-img">
+													<a href="/product/<%= product._id %>">
+														<!-- Dynamically display the first image of the product -->
+														<% if (product.images && product.images.length > 0) { %>
+															<img src="<%= product.images[0].url %>" alt="<%= product.title %>"
+															style="width: 100%; height: 260px; object-fit: cover; display: block;">
+														<% } else { %>
+															<img src="/images/default-placeholder.png" alt="No Image Available">
+														<% } %>
+													</a>
+					
+																	
+													<div class="product-action">
+														<!-- Favourite functionality -->
+														<form method="POST" action="/addToFavourites" id="favouriteForm">
+															<input type="hidden" name="productID" value="<%= product._id %>">
+															<button type="submit" style="background: none; border: none; padding: 0;">
+																<% if (product.isFavourite) { %>
+																	<!-- Filled heart icon for favourites -->
+																	<i class="fa fa-heart favourite-icon favourite-selected"></i>
+																<% } else { %>
+																	<!-- Outline heart icon for non-favourites -->
+																	<i class="fa fa-heart-o favourite-icon"></i>
+																<% } %>
+															</button>
+														</form>
+													
+														<!-- Share button remains unchanged -->
+														<a href="javascript:void(0)" class="share">
+															<i class="lni lni-share"></i>
+														</a>
+													</div>
+													
+																					
+													
+												</div>
+									
+												<a href="/product/<%= product._id %>">
+													<div class="product-content">
+														<h3 class="name">
+															<%= product.title %>
+														</h3>
+														<span class="update">Last Update: <%= product.updatedAt ? product.updatedAt.toLocaleString() : "N/A" %></span>
+														<ul class="address">
+															<li>
+																<a href="javascript:void(0)"><i class="lni lni-calendar"></i> 
+																	<%= product.createdAt ? new Date(product.createdAt).toLocaleDateString() : "N/A" %>
+																</a>
+															</li>
+															<li>
+																<a href="javascript:void(0)"><i class="lni lni-map-marker"></i> 
+																	<% if (product.locationID) { %>
+																		<%= product.locationID.city %>, <%= product.locationID.state %>, <%= product.locationID.country %>
+																	<% } else { %>
+																		N/A
+																	<% } %>
+																</a>
+															</li>
+															<li>
+																<a href="javascript:void(0)"><i class="lni lni-user"></i> 
+																	<%= product.userID ? `${product.userID.username}` : "N/A" %>
+																</a>
+															</li>
+						
+														</ul>
+														<div class="product-bottom">
+															<h3 class="price">₹<%= product.price ? product.price.toLocaleString("en-IN") : "N/A" %></h3>
+														</div>
+													</div>
+												</a>
+											</div>
+										</div>
+									
+										<% } %>
+									<% }) %>
+									</div>
+
+								</div>
+							</div>
+
+
+							
+						</div>
+					</div>
+
+					<!-- sidebar wrapper  -->
+					<div class="col-lg-4">
+						<div class="sidebar-wrapper">
+							<!-- price range  -->
+							<div class="box-style price-range">
+								<h3 class="mb-30">Price Range</h3>
+								<div class="collapse show" id="pricingOne">
+								  <div class="price-range-simple">
+									<form action="/category/search#filter-category" method="GET" class="range-form">
+									  <!-- Use categoryName instead of category, or check if it exists first -->
+									  <input type="hidden" name="category" value="<%= typeof categoryName !== 'undefined' ? categoryName : '' %>">
+									  
+									  <div class="range-inputs-container">
+										<input type="number" name="min" placeholder="Min" class="range-input" id="min-price" min="0">
+										<span class="range-connector">to</span>
+										<input type="number" name="max" placeholder="Max" class="range-input" id="max-price" min="0">
+										<button type="submit" class="main-btn btn-hover" style="display: flex; 
+												margin-top:-20px;
+										               justify-content: center; 
+										               align-items: center; 
+										               padding: 10px 30px; 
+										               background-color: #ff6b6b; 
+										               border: none; 
+										               border-radius: 6px; 
+										               color: white; 
+										               font-size: 14px; 
+										               font-weight: bold; 
+										               cursor: pointer; 
+										               box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+										               transition: background-color 0.3s, transform 0.2s;">
+											Apply
+										</button>
+
+									  </div>
+									</form>
+								  </div>
+								</div>
+							  </div>
+
+							<!-- sidebar category  -->
+							<div class="box-style sidebar-category">
+								<h3 class="mb-30"><a href="/category">Categories</a></h3>
+								<ul>
+									<% for(category of categories)  { %>
+
+										<li>
+											<a href="/category/search?category=<%= encodeURIComponent(category.type) %>#filter-category">
+												<span><%= category.type.charAt(0).toUpperCase() + category.type.slice(1) %></span> 
+												<span class="right"><%= category.productCount %></span>
+											</a>
+										</li>
+					
+									<% } %>
+								</ul>
+							</div>
+
+							<!-- add box -->
+							<div class="box-style add-box">
+								<h3 class="mb-30">Advertisement</h3>
+								<div class="image">
+									<a href="javascript:void(0)" class="d-block">
+										<img src="/images/product/ad-img.jpg" alt="" class="w-100">
+									</a>
+								</div>
+							</div>
+
+							
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+	</section>
+	<!--====== CATEGORY PART END ======-->
+
+		<!--====== BACK TOP TOP PART START ======-->
+	<a href="#" class="back-to-top btn-hover"><i class="lni lni-chevron-up" style="margin-top: 11px;"></i></a>
+	<!--====== BACK TOP TOP PART ENDS ======-->
+
+	<!--====== Bootstrap js ======-->
+	<script src="/js/bootstrap.bundle-5.0.0.alpha-min.js"></script>
+
+	<!--====== Tiny slider js ======-->
+	<script src="/js/tiny-slider.js"></script>
+
+	<!--====== wow js ======-->
+	<script src="/js/wow.min.js"></script>
+
+	<!--====== glightbox js ======-->
+	<script src="/js/glightbox.min.js"></script>
+
+	<!--====== Selectr js ======-->
+	<script src="/js/selectr.min.js"></script>
+
+	<!--====== Nouislider js ======-->
+	<script src="/js/nouislider.js"></script>
+
+	<!--====== Main js ======-->
+	<script src="/js/main.js"></script>
+
+	<script>
+		//======== select js
+		new Selectr('#sort', {
+			searchable: false,
+			width: 300
+		});
+
+		var snapSlider = document.getElementById('slider-snap');
+
+			noUiSlider.create(snapSlider, {
+				start: [199, 789],
+				// snap: true,
+				connect: true,
+				range: {
+					'min': 99,
+					'max': 999
+				}
+			});
+
+			var snapValues = [
+					document.getElementById('slider-snap-value-lower'),
+					document.getElementById('slider-snap-value-upper')
+				];
+
+				snapSlider.noUiSlider.on('update', function (values, handle) {
+					snapValues[handle].innerHTML = values[handle]
+				});
+	</script>
+
+
+<!-- Limit for Min and Max feild. -->
+<script>
+    const minInput = document.getElementById("min-price");
+    const maxInput = document.getElementById("max-price");
+
+    // Set a threshold limit
+    const MAX_LIMIT = 9999999999;
+
+    // Function to validate inputs
+    function validateInputs() {
+        if (parseInt(minInput.value) > MAX_LIMIT || parseInt(maxInput.value) > MAX_LIMIT) {
+            alert(`Values must not exceed ${MAX_LIMIT}. Fields will be cleared.`);
+            minInput.value = "";
+            maxInput.value = "";
+        }
+    }
+
+    // Attach event listeners for blur (losing focus) on both inputs
+    minInput.addEventListener("blur", validateInputs);
+    maxInput.addEventListener("blur", validateInputs);
+</script>
+
+</body>
+
+</html>
+
+

@@ -1,0 +1,271 @@
+<% layout("/layouts/boilerplate") %>
+
+
+<head>
+    <style>
+        /* Professional Mark as Sold Button Styles */
+        .sold-btn {
+          background-color: #49c165;
+          height: 40px;
+          width: 130px;
+          color: white;
+          border: none;
+          padding: 6px 12px;
+          border-radius: 4px;
+          font-size: 13px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sold-btn:hover {
+          background-color: #38a850;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sold-btn:active {
+          transform: translateY(0);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sold-btn i {
+          font-size: 16px;
+        }
+        
+        .sold-status {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          color: #6c757d;
+          font-size: 14px;
+          font-style: italic;
+        }
+		
+		
+		
+      </style>
+</head>
+
+<body>
+	<!--[if IE]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+    <![endif]-->
+
+	<!--====== PRELOADER PART START ======-->
+
+	<div class="preloader" style="opacity: 0; display: none;">
+		<div class="loader">
+			<div class="ytp-spinner">
+				<div class="ytp-spinner-container">
+					<div class="ytp-spinner-rotator">
+						<div class="ytp-spinner-left">
+							<div class="ytp-spinner-circle"></div>
+						</div>
+						<div class="ytp-spinner-right">
+							<div class="ytp-spinner-circle"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--====== PRELOADER PART ENDS ======-->
+
+	
+
+	<!--====== BANNER PART START ======-->
+	<section class="banner-area bg_cover">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="banner-content">
+						<h1 class="text-white">
+							My Favourites 
+						</h1>
+						<nav aria-label="breadcrumb">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+								<li class="breadcrumb-item active" aria-current="page">Favourites</li>
+							</ol>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--====== BANNER PART END ======-->
+
+	<!--====== DASHBOARD PART START ======-->
+	<section class="dashboard-area pb-110">
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-3 col-lg-4">
+					<div class="left-sidebar-wrapper box-style">
+						<div class="sidebar-header">
+							<div class="image">
+                                <% try { %>
+                                    <% if (user && user.photo && user.photo.url) { %>
+                                        <img src="<%= user.photo.url %>" alt="<%= user.username || 'User' %>" onerror="this.src='/images/default.png'">
+                                    <% } else { %>
+                                        <img src="/images/default.png" alt="Default user">
+                                    <% } %>
+                                <% } catch (e) { %>
+                                    <img src="/images/default.png" alt="Default user">
+                                <% } %>
+                            </div>
+							<div class="info">
+								<h3><%= user.username%></h3>
+								<p class="mb-30"></p>
+							</div>
+						</div>
+
+						<div class="sidebar-menu">
+							<nav>
+								<ul>
+								
+									<li>
+										<a href="/profile"><i class="fa-solid fa-user-tie"></i> Profile Settings</a>
+									</li>
+									
+									<li>
+										<a href="/product/myads"><i class="fa-solid fa-list-ul"></i>My Ads</a>
+									</li>
+									
+									<li>
+										<a href="/favourites" class="active"><i class="fa-solid fa-heart"></i>Favourites</a>
+									</li>
+									<li>
+										<a href="/privacy"><i class="fa-solid fa-user-lock"></i>Privacy Settings</a>
+									</li>
+									<li>
+                                        <a href="/product/compare"> <i class="fa-regular fa-window-restore"></i>My Comparison</a>
+                                    </li>
+									<li>
+										<a href="/logout"><i class="fa-solid fa-right-from-bracket fa-flip-horizontal"></i>Sign Out</a>
+									</li>
+								</ul>
+							</nav>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-xl-9 col-lg-8">
+					<div class="dashboard-wrapper box-style">
+						<div class="title">
+							<h3>Favourites Products</h3>
+						</div>
+
+
+                        
+						
+                          
+
+						<div class="table-wrapper table-responsive">
+                            <table class="table">
+                              <thead>
+                                <tr>
+                                  <th>
+                                    Photo
+                                  </th>
+                                  <th>
+                                    Title
+                                  </th>
+                                  <th>
+                                    Price
+                                  </th>
+                                  
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <% products.forEach(product => { %>
+									
+
+									<tr onclick="window.location='/product/<%= product.id %>'" style="cursor: pointer;">
+
+                                        <td>
+                                      <div class="image">
+                                        <% if (product.images && product.images.length > 0) { %>
+                                          <img src="<%= product.images[0].url %>" width="100" alt="<%= product.title %>">
+                                        <% } else { %>
+                                          <img src="assets/images/default-product.jpg" width="100" alt="No Image">
+                                        <% } %>
+                                      </div>
+                                    </td>
+                                    <td>
+                                      <h6><%= product.title %> </h6>
+                                      <span class="ad-id">Ad ID: <%= product.id %></span>
+                                    </td>
+                                    <td>
+                                      <p style="color:#ff6b6b;">₹ <%= product.price ? product.price.toLocaleString("en-IN") : "N/A" %></p>
+                                    </td>
+                                    <td>
+                                        <form action="/addToFavourites" method="POST" onsubmit="event.stopPropagation();">
+                                            <input type="hidden" name="productID" value="<%= product.id %>">
+                                            <button type="submit" class="btn btn-danger">Remove</button>
+                                          </form>
+                                    </td>
+                                    
+                                  </tr>
+                                <% }) %>
+                              </tbody>
+                            </table>
+                          </div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--====== DASHBOARD PART END ======-->
+
+<!--====== BACK TOP TOP PART START ======-->
+<a href="#" class="back-to-top btn-hover"><i class="lni lni-chevron-up" style="margin-top: 11px;"></i></a>
+<!--====== BACK TOP TOP PART ENDS ======-->
+
+	<!--====== Bootstrap js ======-->
+	<script src="assets/js/bootstrap.bundle-5.0.0.alpha-min.js"></script>
+
+	<!--====== Tiny slider js ======-->
+	<script src="assets/js/tiny-slider.js"></script>
+
+	<!--====== wow js ======-->
+	<script src="assets/js/wow.min.js"></script>
+
+	<!--====== glightbox js ======-->
+	<script src="assets/js/glightbox.min.js"></script>
+
+	<!--====== Selectr js ======-->
+	<script src="assets/js/selectr.min.js"></script>
+
+	<!--====== Nouislider js ======-->
+	<script src="assets/js/nouislider.js"></script>
+
+	<!--====== Main js ======-->
+	<script src="assets/js/main.js"></script>
+
+   
+	<script> 
+		window.onscroll = function () {
+			const header = document.getElementById("header_navbar");
+			const sticky = header.offsetTop;
+		
+			if (window.pageYOffset > sticky) {
+				header.classList.add("sticky");
+			} else {
+				header.classList.remove("sticky");
+			}
+		};
+	</script>
+
+</body></html>
+
+
+
+

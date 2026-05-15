@@ -1,0 +1,164 @@
+<!-- Flash Messages Container -->
+<div class="flash-container">
+    <% if (success && success.length) { %>
+        <div class="flash-message success-message" id="successFlash">
+            <div class="flash-content">
+                <div class="flash-icon">
+                    <i class="fa fa-check-circle"></i>
+                </div>
+                <div class="flash-text">
+                    <%= success %>
+                </div>
+            </div>
+            <button type="button" class="flash-close" onclick="closeFlash('successFlash')">
+                <span>&times;</span>
+            </button>
+        </div>
+    <% } %>
+
+    <% if (error && error.length) { %>
+        <div class="flash-message error-message" id="errorFlash">
+            <div class="flash-content">
+                <div class="flash-icon">
+                    <i class="fa fa-exclamation-circle"></i>
+                </div>
+                <div class="flash-text">
+                    <%= error %>
+                </div>
+            </div>
+            <button type="button" class="flash-close" onclick="closeFlash('errorFlash')">
+                <span>&times;</span>
+            </button>
+        </div>
+    <% } %>
+</div>
+
+<!-- CSS for flash messages -->
+<style>
+    .flash-container {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        z-index: 9999;
+        max-width: 350px;
+        width: 100%;
+    }
+
+    .flash-message {
+        padding: 15px;
+        border-radius: 6px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        animation: slideIn 0.3s ease-out forwards;
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+
+    .success-message {
+        background-color: #d4edda;
+        border-left: 4px solid #28a745;
+        color: #155724;
+    }
+
+    .error-message {
+        background-color: #f8d7da;
+        border-left: 4px solid #dc3545;
+        color: #721c24;
+    }
+
+    .flash-content {
+        display: flex;
+        align-items: center;
+    }
+
+    .flash-icon {
+        margin-right: 12px;
+        font-size: 18px;
+    }
+
+    .flash-text {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 1.4;
+    }
+
+    .flash-close {
+        background: transparent;
+        border: none;
+        color: inherit;
+        cursor: pointer;
+        font-size: 20px;
+        opacity: 0.7;
+        padding: 0;
+        margin-left: 10px;
+        transition: opacity 0.2s;
+    }
+
+    .flash-close:hover {
+        opacity: 1;
+    }
+
+    /* Animation for slide in from left */
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    /* Animation for slide out to left */
+    @keyframes slideOut {
+        from {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        to {
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+    }
+
+    .flash-hide {
+        animation: slideOut 0.3s ease-in forwards;
+    }
+</style>
+
+<!-- JavaScript for flash behavior -->
+<script>
+    // Auto-dismiss flash messages after 5 seconds
+    document.addEventListener('DOMContentLoaded', function() {
+        var successFlash = document.getElementById('successFlash');
+        var errorFlash = document.getElementById('errorFlash');
+
+        if (successFlash) {
+            setTimeout(function() {
+                closeFlash('successFlash');
+            }, 5000);
+        }
+
+        if (errorFlash) {
+            setTimeout(function() {
+                closeFlash('errorFlash');
+            }, 7000);
+        }
+    });
+
+    function closeFlash(id) {
+        var flash = document.getElementById(id);
+        if (flash) {
+            flash.classList.add('flash-hide');
+
+            // Remove from DOM after animation completes
+            flash.addEventListener('animationend', function() {
+                flash.remove();
+            });
+        }
+    }
+</script>

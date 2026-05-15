@@ -1,0 +1,920 @@
+<% layout("/layouts/boilerplate") %>
+
+<head>
+<style>
+
+    
+.map-section {
+    margin: 25px 0;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.map-container {
+    width: 100%;
+    height: 400px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 15px;
+    z-index: 1;
+}
+
+.location-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.location-header i {
+    color: #0073e6;
+}
+
+.location-details {
+    margin-top: 15px;
+    padding: 15px;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.location-details p {
+    margin: 8px 0;
+    color: #495057;
+    display: flex;
+    justify-content: space-between;
+}
+
+.location-details strong {
+    color: #2c3e50;
+}
+
+.coordinates {
+    font-family: monospace;
+    color: #666;
+    margin-top: 10px;
+    background: #fff;
+    padding: 8px 12px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.leaflet-popup-content {
+    padding: 10px;
+}
+
+.leaflet-popup-content h4 {
+    margin: 0 0 5px 0;
+    color: #0073e6;
+}
+
+.leaflet-popup-content p {
+    margin: 5px 0;
+    color: #666;
+}
+
+.address-line {
+    margin: 3px 0;
+}
+
+    /* Container for thumbnails with scrollbar */
+    .thumbnail-container {
+        height: 400px; /* Match the height of the main image container */
+        overflow-y: auto; /* Enable vertical scrolling */
+        scrollbar-width: thin; /* For Firefox */
+        scrollbar-color: #aaa #f0f0f0; /* For Firefox */
+        padding-right: 5px;
+    }
+
+    /* Webkit scrollbar styling */
+    .thumbnail-container::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .thumbnail-container::-webkit-scrollbar-track {
+        background: #f0f0f0;
+        border-radius: 10px;
+    }
+
+    .thumbnail-container::-webkit-scrollbar-thumb {
+        background: #aaa;
+        border-radius: 10px;
+    }
+
+    .thumbnail-container::-webkit-scrollbar-thumb:hover {
+        background: #888;
+    }
+
+    /* Update the showcase-img styles */
+    .showcase-img { 
+        width: 100%; 
+        max-width: 500px; /* Maximum width of the main image container */ 
+        height: 400px;    /* Fixed height for the image */ 
+        margin: auto; 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        border: 1px solid #ddd; 
+        border-radius: 8px; 
+        overflow: hidden; 
+        background-color: #000; /* Black background */
+    } 
+   
+    .showcase-img img { 
+        width: auto;
+        height: auto;
+        max-width: 100%; 
+        max-height: 100%; 
+        object-fit: contain; /* Ensures the image is fully visible */
+    } 
+   
+    /* Thumbnail styles */
+    .thumb-img img { 
+        width: 50px;
+        height: 80px;
+        object-fit: cover;
+        border: 1px solid #ddd; 
+        border-radius: 4px; 
+        margin-bottom: 10px; 
+        cursor: pointer; 
+        background-color: #f9f9f9; 
+    } 
+   
+    .thumb-img img:hover { 
+        border-color: #007bff; 
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); 
+    } 
+   
+    /* Active thumbnail styling */
+    .thumb-img.active img {
+        border: 2px solid #007bff;
+        box-shadow: 0 2px 8px rgba(0, 123, 255, 0.5);
+    }
+
+    /* Ensure the thumbnails list takes proper spacing */
+    .thumb-img-wrapper {
+        width: 100%;
+    }
+   
+/* Product Highlights */
+
+
+    .product-highlights {
+        margin-bottom: 20px;
+    }
+    
+    .highlight-item {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+    
+    .highlight-item:hover {
+        background-color: #e9ecef;
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .highlight-icon {
+        font-size: 24px;
+        color: #ff6b6b;
+        display: block;
+    }
+    
+    .highlight-value {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 2px;
+    }
+    
+    .highlight-label {
+        font-size: 12px;
+        color: #6c757d;
+        text-transform: uppercase;
+    }
+
+    
+/* Tips model */
+
+.hidden-custom {
+    display: none;
+    }
+    .modal-custom {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none; /* Default to hidden */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    }
+    
+    
+    .modal-content-custom {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    }
+    
+    .modal-header-custom img {
+    width: 50px;
+    margin-bottom: 10px;
+    }
+    
+    .modal-header-custom h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+    }
+    
+    .modal-body-custom ul {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+    }
+    
+    .modal-body-custom li {
+    margin: 10px 0;
+    font-size: 14px;
+    color: #555;
+    }
+    
+    .modal-footer-custom button {
+    background: #63E6BE;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    }
+    
+    .modal-footer-custom button:hover {
+    background: #51c8a0;
+    }
+    
+    
+    /* Whatsapp chat Button*/
+    .contact-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: white;
+        border-left: 4px solid #ff6b6b;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        padding: 16px 24px;
+        margin: 30px 0;
+        transition: all 0.3s ease-in-out;
+    }
+    
+    .contact-bar:hover {
+        transform: scale(1.02);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+    
+    .contact-label {
+        display: block;
+        font-size: 13px;
+        color: #868e96;
+        margin-bottom: 4px;
+        animation: fadeIn 0.6s ease-in-out;
+    }
+    
+    .contact-prompt {
+        font-size: 17px;
+        font-weight: 600;
+        color: #495057;
+        margin: 0;
+        animation: fadeIn 0.8s ease-in-out;
+    }
+    
+    .contact-action {
+        display: flex;
+        align-items: center;
+        background-color: #25D633;
+        color: white;
+        font-weight: 500;
+        padding: 10px 20px;
+        border-radius: 50px;
+        border: none;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        animation: bounceIn 0.6s ease-in-out;
+    }
+    
+    .contact-action:hover {
+        background-color: #128c7e;
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 6px 12px rgba(255, 107, 107, 0.3);
+    }
+    
+    .contact-action i {
+        margin-right: 10px;
+        animation: fadeIn 0.5s ease-in-out;
+    }
+    
+    /* Keyframe Animations */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes bounceIn {
+        0% {
+            transform: scale(0.8);
+            opacity: 0;
+        }
+        50% {
+            transform: scale(1.1);
+            opacity: 0.5;
+        }
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .contact-bar {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .contact-info {
+            margin-bottom: 15px;
+        }
+        
+        .contact-action {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+    
+</style>
+</head>
+
+<body>
+	
+
+	<!--====== PRELOADER PART START ======-->
+
+	<div class="preloader" style="opacity: 0; display: none;">
+		<div class="loader">
+			<div class="ytp-spinner">
+				<div class="ytp-spinner-container">
+					<div class="ytp-spinner-rotator">
+						<div class="ytp-spinner-left">
+							<div class="ytp-spinner-circle"></div>
+						</div>
+						<div class="ytp-spinner-right">
+							<div class="ytp-spinner-circle"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--====== PRELOADER PART ENDS ======-->
+
+	
+
+	<!--====== BANNER PART START ======-->
+	<section class="banner-area bg_cover">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="banner-content">
+						<h1 class="text-white">Product Details</h1>
+						<nav aria-label="breadcrumb">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="/product">Home</a></li>
+								<li class="breadcrumb-item active" aria-current="page">Product</li>
+							</ol>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--====== BANNER PART END ======-->
+
+	<!--====== PRODUCT DETAILS PART START ======-->
+	<section class="product-details-area">
+		<div class="container">
+			<div class="product-details-wrapper box-style">
+
+				<div class="info-wrapper">
+                    <div class="showcase-wrapper">
+                        <div class="row">
+                            <!-- Thumbnail Navigation with Scrollbar -->
+                            <div class="order-last col-lg-2 col-xl-2 order-lg-first">
+                                <div class="thumbnail-container">
+                                    <div class="nav flex-lg-column nav-pills thumb-img-wrapper" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                        <% product.images.forEach((image, index) => { %>
+                                            <a class="thumb-img <%= index === 0 ? 'active' : '' %>" id="v-pills-tab-<%= index + 1 %>" 
+                                               data-toggle="pill" href="#v-pills-<%= index + 1 %>" 
+                                               role="tab" aria-controls="v-pills-<%= index + 1 %>" 
+                                               aria-selected="<%= index === 0 %>">
+                                                <img src="<%= image.url %>" alt="<%= product.title %>">
+                                            </a>
+                                        <% }) %>
+                                    </div>
+                                </div>
+                            </div>
+                    
+                            <!-- Main Content -->
+                            <div class="col-lg-10 col-xl-10">
+                                <div class="tab-content" id="v-pills-tabContent">
+                                    <% product.images.forEach((image, index) => { %>
+                                        <div class="tab-pane fade <%= index === 0 ? 'show active' : '' %>" 
+                                             id="v-pills-<%= index + 1 %>" 
+                                             role="tabpanel" 
+                                             aria-labelledby="v-pills-tab-<%= index + 1 %>">
+                                            <div class="showcase-img">
+                                                <img src="<%= image.url %>" alt="<%= product.title %>">
+                                            </div>
+                                        </div>
+                                    <% }) %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+					<div class="text-wrapper">
+						<div class="mb-20 meta-top">
+							<a href="javascript:void(0)" class="mr-3 date"><i class="mr-2 lni lni-calendar"></i> <%= product.createdAt ? new Date(product.createdAt).toLocaleDateString() : "N/A" %></a>
+							<a href="javascript:void(0)" class="address" id="add-comparison"><i class="mr-2 lni lni-map-marker"></i> <% if (product.locationID) { %>
+                                <%= product.locationID.city %>, <%= product.locationID.state %>, <%= product.locationID.country %>
+                            <% } else { %>
+                                N/A
+                            <% } %></a>
+
+                                <!-- Favorite Button -->
+                 <form method="POST" action="/addToFavourites" id="favouriteForm">
+                                <input type="hidden" name="productID" value="<%= product._id %>">
+                                <button type="submit" style="background: none; border: none; margin-left:1100px; margin-top:-20px;">
+                                    <% if (isFavourite) { %>
+                                        <i class="fa fa-heart" style="color: #ff6b6b; cursor: pointer;"></i>
+                                    <% } else { %>
+                                        <i class="fa fa-heart-o" style="color: #ff6b6b; cursor: pointer;"></i>
+                                    <% } %>
+                                </button>
+                            </form>
+
+						</div>
+						<h3 class="title mb-25"><%= product.title %></h3>
+                        
+						<h3 style="background: linear-gradient(90deg, #ff6b6b, #ff9b9b); 
+           color: white; 
+           padding: 12px 30px; 
+           border-radius: 12px; 
+           font-weight: bold; 
+           font-size: 22px; 
+           text-align: center; 
+           margin-left: 980px; 
+           margin-right: 20px; 
+           margin-top: -20px; 
+           display: inline-block; 
+           box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.2);">
+    ₹<%= product.price ? product.price.toLocaleString("en-IN") : "N/A" %>
+</h3>
+
+             
+             
+             
+             
+                        
+                        <p class="description mb-30" style=" margin-top:-40px; ">
+                            <% 
+                              const text = product.description || '';
+                              const maxLineLength = 130;
+                              let start = 0;
+                              while (start < text.length) {
+                                // Take a substring of maxLineLength
+                                let line = text.substr(start, maxLineLength);
+                          
+                                // To avoid cutting words in half, try to break at last space within line
+                                const lastSpace = line.lastIndexOf(' ');
+                                if (lastSpace > -1 && start + maxLineLength < text.length) {
+                                  line = line.substr(0, lastSpace);
+                                }
+                          
+                                // Output the line with a <br> except the last one
+                            %>
+                                <%- line %><br>
+                            <% 
+                                start += line.length;
+                              }
+                            %>
+                          </p>
+
+                          
+
+                        <% if(product.categoryID.type === "car/bike" || 
+                        product.categoryID.type === "electronics" ||
+                        product.categoryID.type === "property") { %>
+                     
+                     <h5 class="subtitle">Highlights:</h5>
+                     <div class="product-highlights mb-4">
+                         <div class="row">
+                             <% 
+                                 // Define key highlights for each category
+                                 let highlights = [];
+                                 
+                                 if (product.categoryID.type === "car/bike") {
+                                     highlights = [
+                                         { icon: "lni-car", label: "Fuel Type", value: categorySpecificData.fuel },
+                                         { icon: "lni-dashboard", label: "Mileage", value: `${categorySpecificData.kmDrived} km` },
+                                         
+                                         { icon: "lni-users", label: "Owners", value: categorySpecificData.noOfOwners },
+                                         { icon: "lni-calendar", label: "Year", value: categorySpecificData.year }
+                                     ];
+                                 } else if (product.categoryID.type === "electronics") {
+                                     highlights = [
+                                         { icon: "lni-tag", label: "Brand", value: categorySpecificData.brandName },
+                                         { icon: "lni-shield", label: "Warranty", value: categorySpecificData.warranty },
+                                         { icon: "lni-calendar", label: "Age", value: `${categorySpecificData.age} years` }
+                                     ];
+                                 } else if (product.categoryID.type === "property") {
+                                     highlights = [
+                                         { icon: "lni-home", label: "BHK", value: `${categorySpecificData.bhk} BHK` },
+                                         { icon: "lni-ruler", label: "Area", value: `${categorySpecificData.areaSqft} sq. ft.` },
+                                         { icon: "lni-car-alt", label: "Parking", value: `${categorySpecificData.carParkingSpace} slots` },
+                                         { icon: "lni-apartment", label: "Furnishing", value: categorySpecificData.furnishing }
+                                     ];
+                                 }
+                                 
+                                 // Filter out any highlights with null or undefined values
+                                 highlights = highlights.filter(item => item.value);
+                             %>
+                             
+                             <% highlights.forEach(highlight => { %>
+                                 <div class="col-md-3 col-6">
+                                     <div class="highlight-item text-center p-3 mb-3">
+                                         <i class="lni <%= highlight.icon %> highlight-icon mb-2"></i>
+                                         <div class="highlight-value"><%= highlight.value %></div>
+                                         <div class="highlight-label"><%= highlight.label %></div>
+                                     </div>
+                                 </div>
+                             <% }); %>
+                         </div>
+                     </div>
+                 <% } %>
+                 
+                 
+                 <% if(product.categoryID.type === "car/bike" || 
+                       product.categoryID.type === "electronics" ||
+                       product.categoryID.type === "property") { %>
+                     <h5 class="subtitle">Specification:</h5>
+                 <% } %>
+                                                    <div class="specification">
+                                                        <% 
+                                                            // Group data dynamically into left and right blocks
+                                                            const details = [];
+                                                           if (product.categoryID.type === "car/bike") {
+                                                                details.push(
+                                                                    { label: "Brand", value: categorySpecificData.brandName },
+                                                                    { label: "Model", value: categorySpecificData.modelName },
+                                                                    { label: "Variant", value: categorySpecificData.variantName },
+                                                                   
+                                                                    
+                                                                    { label: "Transmission", value: categorySpecificData.transmission },
+                                                                    
+                                                                   
+                                                                    { label: "Age", value: `${categorySpecificData.age} years` }
+                                                                );
+                                                            } else if (product.categoryID.type === "electronics") {
+                                                                details.push(
+                                                                   
+                                                                    { label: "Model", value: categorySpecificData.modelName },
+                                                                    { label: "Year", value: categorySpecificData.year },
+                                                                   
+                                                                );
+                                                            } else if (product.categoryID.type === "property") {
+                                                                details.push(
+                                                                    { label: "Type", value: categorySpecificData.type },
+                                                                   
+                                                                    { label: "Bathrooms", value: categorySpecificData.bathrooms },
+                                                                    
+                                                                   
+                                                                    { label: "Carpet Area", value: categorySpecificData.carpetAreaSqft ? `${categorySpecificData.carpetAreaSqft} sq. ft.` : null },
+                                                                    { label: "Bachelors Allowed", value: categorySpecificData.bachelorsAllowed ? 'Yes' : 'No' },
+                                                                    { label: "Total Floors", value: categorySpecificData.totalFloors },
+                                                                    
+                                                                    { label: "Facing", value: categorySpecificData.facing },
+                                                                    { label: "Purpose", value: categorySpecificData.type2 === 'rent' ? 'For Rent' : 'For Sale' }
+                                                                );
+                                                            }
+                                                    
+                                                            // Remove null values
+                                                            const filteredDetails = details.filter(detail => detail.value);
+                                                    
+                                                            // Split details into two blocks
+                                                            const leftBlock = filteredDetails.slice(0, Math.ceil(filteredDetails.length / 2));
+                                                            const rightBlock = filteredDetails.slice(Math.ceil(filteredDetails.length / 2));
+                                                        %>
+                                                    
+                                                        <div class="row">
+                                                            <!-- Left Block -->
+                                                            <div class="col">
+                                                                <ul>
+                                                                    <% leftBlock.forEach(detail => { %>
+                                                                        <li><i class="lni lni-checkmark-circle"></i> <strong><%= detail.label %>:</strong> <%= detail.value %></li>
+                                                                    <% }) %>
+                                                                </ul>
+                                                            </div>
+                                                    
+                                                            <!-- Right Block -->
+                                                            <div class="col">
+                                                                <ul>
+                                                                    <% rightBlock.forEach(detail => { %>
+                                                                        <li><i class="lni lni-checkmark-circle"></i> <strong><%= detail.label %>:</strong> <%= detail.value %></li>
+                                                                    <% }) %>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="contact-bar">
+                                                        <div class="contact-info">
+                                                            <span class="contact-label">Ready to purchase?</span>
+                                                            <h5 class="contact-prompt">Discuss details with <span style="color: #ff6b6b;"><%= seller.username %></span></h5>
+                                                        </div>
+                                                        
+                                                        <button class="contact-action" onclick="handleChatClickCustom('<%= seller.phone %>')">
+                                                            <i class="fa-brands fa-whatsapp fa-beat-fade fa-lg"></i>
+                                                            <span>&nbsp;Connect via WhatsApp</span>
+                                                        </button>
+                                                    </div>
+
+                                                    <!-- Add to compare -->
+                                                    <div class="contact-bar">
+                                                        <div class="contact-info">
+                                                            <span class="contact-label">Curious to find the best?</span>
+                                                            <h5 class="contact-prompt">Add <span style="color: #ff6b6b;"><%= product.title %></span> to compare and discover your perfect choice!</h5>
+                                                        </div>
+                                                    
+                                                        <% if (isInComparisonList) { %>
+                                                            <!-- If the product is already in the comparison list -->
+                                                            <form action="/product/compare" method="get">
+                                                                <button type="submit" class="main-btn btn-hover">
+                                                                    <i class="fa-regular fa-window-restore"></i>
+                                                                    <span>&nbsp;View Comparison</span>
+                                                                </button>
+                                                            </form>
+                                                        <% } else { %>
+                                                            <!-- If the product is not in the comparison list -->
+                                                            <form action="/product/<%= product._id %>/compare/add#add-comparison" method="POST">
+                                                                <button type="submit" class="main-btn btn-hover">
+                                                                    <i class="fa-regular fa-window-restore"></i>
+                                                                    <span>&nbsp;Add to Compare</span>
+                                                                </button>
+                                                            </form>
+                                                        <% } %>
+                                                    </div>
+                                                    
+				
+                <div class="map-section">
+                    <div class="location-header">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h3 style="margin: 0; color: #0073e6;">Location</h3>
+                    </div>
+                    <div id="map" class="map-container"></div>
+                    
+                    <div class="location-panel">
+                        <% if (typeof product !== 'undefined' && product.locationID) { %>
+                            <p><strong>Posted in:</strong> 
+                                <%= [
+                                    product.locationID.city,
+                                    product.locationID.state,
+                                    product.locationID.country
+                                ].filter(Boolean).join(', ') || 'N/A' %>
+                            </p>
+                            <% if (product.locationID.latitude && product.locationID.longitude) { %>
+                                <input type="hidden" id="locationData" 
+                                    data-lat="<%= product.locationID.latitude %>"
+                                    data-lng="<%= product.locationID.longitude %>"
+                                    data-title="<%= product.title || '' %>"
+                                    data-area="<%= product.locationID.area || '' %>"
+                                    data-city="<%= product.locationID.city || '' %>"
+                                    data-state="<%= product.locationID.state || '' %>"
+                                    data-country="<%= product.locationID.country || '' %>"
+                                    data-zipcode="<%= product.locationID.zipCode || '' %>">
+                            <% } %>
+                        <% } else { %>
+                            <p><strong>Posted in:</strong> N/A</p>
+                        <% } %>
+                    </div>
+                    
+                </div>
+
+
+
+               
+ 
+
+
+
+                <!-- Modal Popup -->
+                <div id="safeDealPopupCustom" class="modal-custom hidden-custom">
+                    <div class="modal-content-custom">
+                        <div class="modal-header-custom">
+                            <img src="\images\warn.png" alt="Warning" class="warning-icon-custom" />
+                            <h3>Tips for a Safe Deal</h3>
+                        </div>
+                        <div class="modal-body-custom">
+                            <ul>
+                                <li>&#9670; Don't enter UPI PIN/OTP, scan unknown QR codes, or click unsafe links.</li>
+                                <li>&#9670; Never give money or product in advance.</li>
+                                <li>&#9670; Report suspicious users to SwapOrbit.</li>
+                                <li>&#9670; Don't share personal details like photos or IDs.</li>
+                                <li>&#9670; Be cautious during buyer-seller meetings.</li>
+                            </ul>
+                        </div>
+                        <div class="modal-footer-custom">
+                            <button onclick="closeSafeDealPopupCustom()">OK</button>
+                        </div>
+                    </div>
+                </div>
+                
+
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+
+
+			</div>
+		</div>
+	</section>
+	<!--====== PRODUCT DETAILS PART END ======-->
+
+
+    <!--====== BACK TOP TOP PART START ======-->
+	<a href="#" class="back-to-top btn-hover"><i class="lni lni-chevron-up" style="margin-top: 11px;"></i></a>
+	<!--====== BACK TOP TOP PART ENDS ======-->
+
+
+	<!--====== Bootstrap js ======-->
+	<script src="/js/bootstrap.bundle-5.0.0.alpha-min.js"></script>
+
+	<!--====== Tiny slider js ======-->
+	<script src="/js/tiny-slider.js"></script>
+
+	<!--====== wow js ======-->
+	<script src="/js/wow.min.js"></script>
+
+	<!--====== glightbox js ======-->
+	<script src="/js/glightbox.min.js"></script>
+
+	<!--====== Selectr js ======-->
+	<script src="/js/selectr.min.js"></script>
+
+	<!--====== Nouislider js ======-->
+	<script src="/js/nouislider.js"></script>
+
+	<!--====== Main js ======-->
+	<script src="/js/main.js"></script>
+
+
+    <script>
+
+        function initMap() {
+            const locationData = document.getElementById('locationData');
+            
+            if (locationData && locationData.dataset.lat && locationData.dataset.lng) {
+                const lat = parseFloat(locationData.dataset.lat);
+                const lng = parseFloat(locationData.dataset.lng);
+                
+                if (isNaN(lat) || isNaN(lng)) {
+                    console.error('Invalid coordinates:', lat, lng);
+                    showErrorMessage('Invalid coordinate values');
+                    return;
+                }
+                
+                try {
+                    const map = L.map('map').setView([lat, lng], 15);
+                    
+                    L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png', {
+                        attribution: '&copy; <a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a>',
+                        maxZoom: 18,
+                    }).addTo(map);
+                    
+                    const customIcon = L.icon({
+                        iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
+                        iconSize: [25, 41],
+                        iconAnchor: [12, 41],
+                        popupAnchor: [1, -34],
+                        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+                        shadowSize: [41, 41],
+                    });
+        
+                    const marker = L.marker([lat, lng], { icon: customIcon }).addTo(map);
+                    
+                    const address = [
+                        locationData.dataset.area,
+                        locationData.dataset.city,
+                        locationData.dataset.state,
+                        locationData.dataset.country,
+                        locationData.dataset.zipcode
+                    ]
+                        .filter(Boolean)
+                        .join(', ');
+        
+                    // Add Google Maps link
+                    const googleMapsLink = `https://www.google.com/maps?q=${lat},${lng}`;
+        
+                    marker.bindPopup(`
+                        <div style="font-weight: bold; font-size: 1.2em;">${locationData.dataset.title}</div>
+                        <div>${address}</div>
+                        <div style="margin-top: 10px;">
+                            <a href="${googleMapsLink}" target="_blank" style="color: #007BFF; text-decoration: none;">
+                                View in Larger Map
+                            </a>
+                        </div>
+                    `);
+        
+                    marker.openPopup();
+                } catch (error) {
+                    console.error('Error initializing map:', error);
+                    showErrorMessage('Error initializing map');
+                }
+            } else {
+                showErrorMessage('Location coordinates not available');
+            }
+        }
+        
+        function showErrorMessage(message) {
+            document.getElementById('map').innerHTML = `
+                <div style="text-align: center; padding: 20px;">
+                    <div style="font-weight: bold; font-size: 1.2em; margin-bottom: 10px;">
+                        ${message}
+                    </div>
+                    <div style="color: #666;">
+                        The exact location for this listing cannot be displayed on the map.
+                    </div>
+                </div>
+            `;
+        }
+        
+        window.addEventListener('load', initMap);
+    </script>    
+
+
+    <script>
+        let isFirstClickCustom = true;
+    
+        function handleChatClickCustom(phoneNumber) {
+            if (isFirstClickCustom) {
+                isFirstClickCustom = false;
+                showSafeDealPopupCustom();
+            } else {
+                redirectToWhatsAppCustom(phoneNumber);
+            }
+        }
+    
+        function showSafeDealPopupCustom() {
+            const popup = document.getElementById('safeDealPopupCustom');
+            popup.style.display = 'flex'; 
+        }
+    
+        function closeSafeDealPopupCustom() {
+            const popup = document.getElementById('safeDealPopupCustom');
+            popup.style.display = 'none';
+        }
+    
+        function redirectToWhatsAppCustom(phoneNumber) {
+            const message = encodeURIComponent("Hello! I am interested in your product. Can we chat?");
+            const whatsappURL = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${message}`;
+            window.open(whatsappURL, '_blank');
+        }
+    </script>
+    
+    
+</body>
+</html>
+
+

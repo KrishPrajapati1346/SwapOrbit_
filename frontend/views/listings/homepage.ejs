@@ -1,0 +1,1316 @@
+
+<% layout("/layouts/boilerplate") %>
+
+<style>
+	
+
+	
+	.hero-section {
+		position: relative;
+		height: 100vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		overflow: hidden;
+		background-color: #000;
+	  }
+  
+	  /* Background Carousel */
+	  .carousel {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 0;
+		display: flex;
+		animation: slide 15s infinite;
+	  }
+  
+	  @keyframes slide {
+		0%, 33% { transform: translateX(0); }
+		33.33%, 66% { transform: translateX(-100%); }
+		66.66%, 100% { transform: translateX(-200%); }
+	  }
+  
+	  .carousel img {
+		min-width: 100%;
+		height: 100%;
+		object-fit: cover;
+	  }
+  
+	  /* Overlay for Blurry Effect */
+	  .overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 1;
+		background: rgba(0, 0, 0, 0.6); /* Semi-transparent black overlay */
+		backdrop-filter: blur(8px); /* Blur effect */
+	  }
+  
+	  /* Content */
+	  .content {
+		position: relative;
+		z-index: 2;
+		text-align: center;
+		color: white;
+		padding: 20px;
+		max-width: 1200px;
+		transition: opacity 0.5s ease-in-out;
+	  }
+  
+	  .content.fade-out {
+		opacity: 0;
+	  }
+	  
+	  .content.fade-in {
+		opacity: 1;
+	  }
+	  
+	  .content h1 {
+		font-size: 3rem;
+		margin-bottom: 1rem;
+		line-height: 1.2;
+	  }
+  
+	  .content p {
+		font-size: 1.2rem;
+		margin-bottom: 1.5rem;
+	  }
+  
+	  .content .main-btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 10px 20px;
+		font-size: 1rem;
+		border: none;
+		border-radius: 30px;
+		background-color: #ff6b6b;
+		color: white;
+		cursor: pointer;
+		transition: transform 0.3s, background-color 0.3s;
+	  }
+  
+	  .content .main-btn:hover {
+
+		background-color: white;
+		color: #ff6b6b;
+		border: 3px solid #ff6b6b;
+		transform: scale(1.03);
+	  }
+  
+	  .content .main-btn .fa-arrow-right {
+		transition: transform 0.3s;
+	  }
+  
+	  .content .main-btn:hover .fa-arrow-right {
+		transform: translateX(5px);
+	  }
+  
+	  .features {
+		display: flex;
+		justify-content: center;
+		gap: 2rem;
+		margin-top: 3rem;
+	  }
+  
+	  .feature {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		color: white;
+	  }
+  
+	  .feature .icon {
+		font-size: 2rem;
+		background: rgba(255, 255, 255, 0.2);
+		padding: 15px;
+		border-radius: 50%;
+		margin-bottom: 0.5rem;
+	  }
+  
+	  .indicators {
+		position: absolute;
+		bottom: 20px;
+		left: 50%;
+		transform: translateX(-50%);
+		display: flex;
+		gap: 10px;
+	  }
+  
+	  .indicator {
+		width: 10px;
+		height: 10px;
+		background: rgba(255, 255, 255, 0.5);
+		border-radius: 50%;
+		cursor: pointer;
+	  }
+  
+	  .indicator.active {
+		width: 10px;
+		background: white;
+	  }
+
+
+
+
+	  /* Our Impact */
+	  .minimal-stats {
+		background-color: #0f172a;
+		padding: 120px 0;
+		position: relative;
+		margin-top: -96px;
+	  }
+	  
+	  .minimal-stats::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 1px;
+		background: linear-gradient(to right, 
+		  transparent, 
+		  rgba(255, 255, 255, 0.1), 
+		  transparent
+		);
+	  }
+	  
+	  .stats-intro {
+		margin-bottom: 80px;
+	  }
+	  
+	  .stats-description {
+		max-width: 600px;
+		margin: 0 auto;
+	  }
+	  
+	  .stats-container {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 40px;
+		max-width: 1200px;
+		margin: 0 auto;
+		margin-top:-50px;
+	  }
+	  
+	  .stat-box {
+		text-align: center;
+		padding: 40px 20px;
+		background: rgba(255, 255, 255, 0.03);
+		border-radius: 12px;
+		transition: all 0.3s ease;
+	  }
+	  
+	  .stat-box:hover {
+		background: rgba(255, 255, 255, 0.05);
+		transform: translateY(-5px);
+	  }
+	  
+	  .stat-icon {
+		font-size: 32px;
+		color: #ff6b6b;
+		margin-bottom: 20px;
+	  }
+	  
+	  .stat-info {
+		color: white;
+	  }
+	  
+	  .stat-value {
+		font-size: 36px;
+		font-weight: 700;
+		margin-bottom: 10px;
+		background: #ff6b6b;
+		background-clip: text;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+	  }
+	  
+	  .stat-name {
+		font-size: 16px;
+		color: rgba(255, 255, 255, 0.7);
+		text-transform: uppercase;
+		letter-spacing: 1px;
+	  }
+	  
+	  @media (max-width: 992px) {
+		.stats-container {
+		  grid-template-columns: repeat(2, 1fr);
+		}
+	  }
+	  
+	  @media (max-width: 576px) {
+		.stats-container {
+		  grid-template-columns: 1fr;
+		}
+		
+		.stat-box {
+		  padding: 30px 20px;
+		}
+	  }
+	  
+</style>
+<body>
+	
+
+	<!--====== HERO PART START ======-->
+	<section class="hero-section">
+		<!-- Background Carousel -->
+		<div class="carousel">
+		  <img src="https://images.pexels.com/photos/5673488/pexels-photo-5673488.jpeg" alt="Discover Hidden Treasures">
+		  <img src="https://images.pexels.com/photos/6214477/pexels-photo-6214477.jpeg" alt="Buy & Sell With Confidence">
+		  <img src="https://images.pexels.com/photos/919436/pexels-photo-919436.jpeg" alt="Join Our Community">
+		</div>
+	
+		<!-- Overlay -->
+		<div class="overlay"></div>
+	
+		<!-- Content -->
+	
+		<div class="content" id="content">
+			<h1 style="color: white; font-size: 60px; font-weight:bold;">Discover Hidden Treasures</h1>			
+			<p style="color: white; margin-top: -10px;">One person's pre-loved item is another's perfect find</p>
+			<h2 style="color: white;">Welcome to SwapOrbit</h2>  <br>
+			<p style="color: white; margin-top: -10px">Buy and sell everything from used cars to mobile phones, search for property, mobiles, and more.</p>
+	  
+			<div class="cta-buttons">
+				<a href="#latest-ads"><button class="main-btn btn-hover">Start Browsing &nbsp;&nbsp;<i class="fa-solid fa-arrow-right fa-sm"></i></button></a>
+			  &nbsp;&nbsp;&nbsp;<a href="/product/newProduct"> <button class="main-btn btn-hover"><i class="fa-solid fa-plus"></i> &nbsp;Post an Ad</button></a></
+			</div>
+
+
+		<!-- Indicators -->
+		<div class="indicators" style="margin-bottom:-80px;">
+		  <div class="indicator active"></div>
+		  <div class="indicator"></div>
+		  <div class="indicator"></div>
+		</div>
+	  </section>
+	  
+	<!--====== HERO PART END ======-->
+
+	<!--====== SEARCH PART START ======-->
+	<div class="search-area">
+        <div class="container">
+            <div class="search-wrapper" id="search-section">
+                <form method="get" action="/product/search#latest-ads">
+                    <div class="row justify-content-center">
+                        <!-- Keyword Input -->
+                        <div class="col-lg-3 col-sm-5 col-10">
+                            <div class="search-input">
+                                <label for="keyword"><i class="lni lni-search-alt theme-color"></i></label>
+                                <input type="text" name="query" id="keyword" placeholder="Search ''Properties'' " required>
+                            </div>
+                        </div>
+
+                        <!-- Custom Category Dropdown -->
+                        <div class="col-lg-3 col-sm-5 col-10">
+                            <div class="search-input">
+                                <label for="category"><i class="lni lni-grid-alt theme-color"></i></label>
+                                <input type="hidden" name="category" id="category-value">
+                                <select id="category-button" class="category-selector">
+                                    <option value="">All Categories</option>
+                                </select>
+                                
+                                <div class="mega-dropdown" id="category-dropdown">
+                                    <!-- Cars Section -->
+                                    <div class="category-section">
+                                        
+                                        <h3 class="category-title"><a href="/product/search?category=car%2Fbike#latest-ads">Cars / Bikes</a></h3>
+                                        <ul class="category-list">
+                                          <!-- Fuel type searches -->
+											<li><a href="/product/search?subType=petrol&category=car%2Fbike&searchBy=fuel#latest-ads">Petrol</a></li>
+											<li><a href="/product/search?subType=diesel&category=car%2Fbike&searchBy=fuel#latest-ads">Diesel</a></li>
+											<li><a href="/product/search?subType=cng%20%26%20hybrids&category=car%2Fbike&searchBy=fuel#latest-ads">CNG & Hybrids</a></li>
+											<li><a href="/product/search?subType=electric&category=car%2Fbike&searchBy=fuel#latest-ads">Electric</a></li>
+											<li><a href="/product/search?subType=lpg&category=car%2Fbike&searchBy=fuel#latest-ads">LPG</a></li>
+											<hr>
+											<!-- Transmission type searches -->
+											<li><a href="/product/search?subType=automatic&category=car%2Fbike&searchBy=transmission#latest-ads">Automatic</a></li>
+											<li><a href="/product/search?subType=manual&category=car%2Fbike&searchBy=transmission#latest-ads">Manual</a></li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- Electronics & Mobiles Section -->
+                                    <div class="category-section">
+                                        <h3 class="category-title">Mobiles</h3>
+                                        <ul class="category-list">
+                                            <li><a href="/product/search?subType=brandName&category=car%2Fbike&searchBy=brandName#latest-ads">Mobile Phones</a></li>
+                                            <li><a href="/product/search?subType=accessories#latest-ads">Accessories</a></li>
+                                            <li><a href="/product/search?subType=tablets#latest-ads">Tablets</a></li>
+                                        </ul>
+
+                                        <h3 class="category-title">Electronics & Appliances</h3>
+                                        <ul class="category-list">
+                                            <li><a href="/product/search?subType=tvs#latest-ads">TVs, Video - Audio</a></li>
+                                            <li><a href="/product/search?subType=kitchen#latest-ads">Kitchen & Other Appliances</a></li>
+                                            <li><a href="/product/search?subType=computers#latest-ads">Computers & Laptops</a></li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- Properties Section -->
+                                    <div class="category-section">
+                                        <h3 class="category-title "><a href="/product/search?category=property#latest-ads">Property</a></h3>
+                                        <ul class="category-list">
+											<!-- Property Type -->
+											<li><a href="/product/search?subType=apartment&category=property&searchBy=type#latest-ads">Apartment</a></li>
+											<li><a href="/product/search?subType=villa&category=property&searchBy=type#latest-ads">Villa</a></li>
+											<li><a href="/product/search?subType=independent%20house&category=property&searchBy=type#latest-ads">Independent house</a></li>
+											<li><a href="/product/search?subType=plot&category=property&searchBy=type#latest-ads">Plot</a></li>
+											<li><a href="/product/search?subType=commercial&category=property&searchBy=type#latest-ads">Commercial</a></li>
+											<li><a href="/product/search?subType=other&category=property&searchBy=type#latest-ads">Other</a></li>
+											<hr>
+											<!-- BHK Options -->
+											<li><a href="/product/search?subType=1&category=property&searchBy=bhk#latest-ads">1 BHK</a></li>
+											<li><a href="/product/search?subType=2&category=property&searchBy=bhk#latest-ads">2 BHK</a></li>
+											<li><a href="/product/search?subType=3&category=property&searchBy=bhk#latest-ads">3 BHK</a></li>
+											<li><a href="/product/search?subType=4&category=property&searchBy=bhk#latest-ads">4 BHK</a></li>
+											<li><a href="/product/search?subType=4%2B&category=property&searchBy=bhk#latest-ads">4+ BHK</a></li>
+										</ul>
+                                    </div>
+
+                                    <!-- Commercial Vehicles & Jobs Section -->
+                                    <div class="category-section">
+                                        <h3 class="category-title"><a href="/product/search?category=fashion#latest-ads">Fashion</a></h3>
+                                        <ul class="category-list">
+											<li><a href="/product/search?subType=men&category=fashion#latest-ads">Men</a></li>
+											<li><a href="/product/search?subType=women&category=fashion#latest-ads">Women</a></li>
+											<li><a href="/product/search?subType=kids&category=fashion#latest-ads">Kids</a></li>
+                                        </ul>
+
+                                        <h3 class="category-title"><a href="/product/search?category=pet#latest-ads">Pets</a></h3>
+                                        <ul class="category-list">
+											<li><a href="/product/search?subType=dogs&category=pet#latest-ads">Dogs</a></li>
+											<li><a href="/product/search?subType=cats&category=pet#latest-ads">Cats</a></li>
+											<li><a href="/product/search?subType=fishes%20%26%20aquarium&category=pet#latest-ads">Fishes & aquarium</a></li>
+											<li><a href="/product/search?subType=birds&category=pet#latest-ads">Birds</a></li>
+											<li><a href="/product/search?subType=birds&category=pet#latest-ads">Others</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Location Dropdown -->
+                        <div class="col-lg-3 col-sm-5 col-10">
+                            <div class="search-input">
+                                <label for="location"><i class="lni lni-map-marker theme-color"></i></label>
+                                <select name="location" id="location">
+                                    <option value="" selected disabled>Locations</option>
+                                    <option value="india">India</option>
+                                    <option value="new-york">New York</option>
+                                    <option value="california">California</option>
+                                    <option value="washington">Washington</option>
+                                    <option value="birmingham">Birmingham</option>
+                                    <option value="chicago">Chicago</option>
+                                    <option value="phoenix">Phoenix</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Search Button -->
+                        <div class="col-lg-2 col-sm-5 col-10">
+                            <div class="search-btn">
+                                <button class="main-btn btn-hover">Search <i class="lni lni-search-alt"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+<!--====== SEARCH PART END ======-->
+
+<!--====== CATEGORY LIST PART START ======-->
+<section class="category-list-area pt-130">
+    <div class="container">
+		<div style="text-align: center; margin: 0 auto;">
+			<h3 style="font-size: 1.5rem; font-weight: bold; color: #333F57; margin-top:-40px;">Explore Categories</h3>
+			<p style="color: #718096; font-size: 1rem; margin-top: 1.0rem;">
+			  Discover thousands of items in our carefully curated categories
+			</p>
+		  </div>
+        <div class="category-list-wrapper">
+            <!-- Vehicles -->
+            <div class="category-list-item">
+                <a href="/product/search?category=car%2Fbike#latest-ads">
+                    <div class="icon">
+                        <i class="lni lni-car"></i>
+                    </div>
+                    <h3>Vehicles</h3>
+                </a>
+            </div>
+
+            <!-- Electronics -->
+            <div class="category-list-item">
+                <a href="/product/search?category=electronics#latest-ads">
+                    <div class="icon">
+                        <i class="lni lni-display"></i>
+                    </div>
+                    <h3>Electronics</h3>
+                </a>
+            </div>
+
+            <!-- Property -->
+            <div class="category-list-item">
+				<a href="/product/search?category=property#latest-ads">
+                    <div class="icon">
+                        <i class="lni lni-apartment"></i>
+                    </div>
+                    <h3>Property</h3>
+                </a> 
+            </div>
+
+            <!-- Fashion -->
+            <div class="category-list-item">
+                <a href="/product/search?category=fashion#latest-ads">
+                    <div class="icon">
+                        <i class="lni lni-tshirt"></i>
+                    </div>
+                    <h3>Fashion</h3>
+                </a>
+            </div>
+
+            <!-- Pets -->
+            <div class="category-list-item">
+                <a href="/product/search?category=pet#latest-ads">
+                    <div class="icon">
+                        <img src="/images/pet2.png" alt="" style="width: 35px; height: 35px;">
+                    </div>
+                    <h3>Pets</h3>
+                </a>
+            </div>
+
+			<!-- Others -->
+			<div class="category-list-item">
+                <a href="/product/search?category=other#latest-ads">
+                    <div class="icon">
+						<img src="/images/other.png" alt="" style="width: 35px; height: 35px;">
+                    </div>
+                    <h3>Others</h3>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!--====== CATEGORY LIST PART END ======-->
+
+<p style="margin-bottom: -50px; " id="latest-ads"></p>
+	<!--====== LATEST PRODUCT PART START ======-->
+	<section class="latest-product-area pt-130 pb-110">
+		<div class="container">
+			<div class="row">
+				<div class="mx-auto col-xl-6 col-lg-7 col-md-10">
+					<div class="text-center section-title mb-60">
+						<h1>Our Latest Ads </h1>
+						<p>"Why wait? The best deals are just a scroll away. Explore our latest ads today!"</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="row" id="products-container">
+				<% if (products.length === 0) { %>
+					<div class="col-12 text-center">
+						<h3>No product found</h3>
+						<p >We couldn't find any products matching your search criteria.</p>
+                        <p>Try adjusting your search terms or browse all products.</p>
+					</div>
+				<% } else { %>
+
+				<% products.forEach(product => { %>
+					<% if (!product.isSold) { %>
+					<div class="col-xl-4 col-lg-6 col-md-6 product-card" id="product-<%= product._id %>">
+						<div class="single-product">
+							<div class="product-img">
+								<a href="/product/<%= product._id %>#product-<%= product._id %>">
+									<!-- Dynamically display the first image of the product -->
+									<% if (product.images && product.images.length > 0) { %>
+										<img src="<%= product.images[0].url %>" alt="<%= product.title %>">
+									<% } else { %>
+										<img src="/images/default-placeholder.png" alt="No Image Available">
+									<% } %>
+								</a>
+								<div class="product-action">
+									<!-- Favourite functionality -->
+									<form method="POST" action="/addToFavourites#product-<%= product._id %>" id="favouriteForm">
+										<input type="hidden" name="productID" value="<%= product._id %>">
+										<button type="submit" style="background: none; border: none; padding: 0;">
+											<% if (product.isFavourite) { %>
+												<!-- Filled heart icon for favourites -->
+												<i class="fa fa-heart favourite-icon favourite-selected"></i>
+											<% } else { %>
+												<!-- Outline heart icon for non-favourites -->
+												<i class="fa fa-heart-o favourite-icon"></i>
+											<% } %>
+										</button>
+									</form>
+									<!-- Share button remains unchanged -->
+									<a href="javascript:void(0)" class="share">
+										<i class="lni lni-share"></i>
+									</a>
+								</div>
+							</div>
+							<a href="/product/<%= product._id %>#product-<%= product._id %>">
+								<div class="product-content">
+									<h3 class="name">
+										<%= product.title %>
+									</h3>
+									<span class="update">Last Update: <%= product.updatedAt ? product.updatedAt.toLocaleString() : "N/A" %></span>
+									<ul class="address">
+										<li>
+											<a href="javascript:void(0)"><i class="lni lni-calendar"></i> 
+												<%= product.createdAt ? new Date(product.createdAt).toLocaleDateString() : "N/A" %>
+											</a>
+										</li>
+										<li>
+											<a href="javascript:void(0)"><i class="lni lni-map-marker"></i> 
+												<% if (product.locationID) { %>
+													<%= product.locationID.city %>, <%= product.locationID.state %>, <%= product.locationID.country %>
+												<% } else { %>
+													N/A
+												<% } %>
+											</a>
+										</li>
+										<li>
+											<a href="javascript:void(0)"><i class="lni lni-user"></i> 
+												<%= product.userID ? `${product.userID.username}` : "N/A" %>
+											</a>
+										</li>
+									</ul>
+									<div class="product-bottom">
+										<h3 class="price">₹<%= product.price ? product.price.toLocaleString("en-IN") : "N/A" %></h3>
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
+					<% } %>
+				<% }) %>
+			<% } %>
+			</div>
+			
+
+		<% if (hasMore) { %>
+			<div class="text-center mt-4 mb-4">
+				<button id="load-more" class="main-btn btn-hover" data-page="1">
+					Load More Products
+				</button>
+			</div>
+		<% } %>
+		</div>
+	</section>
+	<!--====== LATEST PRODUCT PART ENDS ======-->
+
+	<!--====== OUR IMPACT PART START ======-->
+	<section class="minimal-stats">
+		<div class="container">
+		  <div class="stats-intro text-center">
+			<h1 class="text-white mb-60" style="margin-top:-45px;">Our Impact</h1>
+			<div class="stats-description">
+			  <p class="text-white-50">Reliable and trusted by millions around the globe.</p>
+			</div>
+		  </div>
+		  
+		  <div class="stats-container">
+			<div class="stat-box">
+			  <i class="lni lni-layers stat-icon"></i>
+			  <div class="stat-info">
+				<div class="stat-value">34,864</div>
+				<div class="stat-name">Regular Ads</div>
+			  </div>
+			</div>
+	  
+			<div class="stat-box">
+			  <i class="lni lni-map-marker stat-icon"></i>
+			  <div class="stat-info">
+				<div class="stat-value">867</div>
+				<div class="stat-name">Locations</div>
+			  </div>
+			</div>
+	  
+			<div class="stat-box">
+			  <i class="lni lni-users stat-icon"></i>
+			  <div class="stat-info">
+				<div class="stat-value">56,743</div>
+				<div class="stat-name">Regular Members</div>
+			  </div>
+			</div>
+	  
+			<div class="stat-box">
+			  <i class="lni lni-heart stat-icon"></i>
+			  <div class="stat-info">
+				<div class="stat-value">95%</div>
+				<div class="stat-name">Satisfaction</div>
+			  </div>
+			</div>
+		  </div>
+		</div>
+	  </section>
+	  
+	<!--====== OUR IMPACT PART ENDS ======-->
+
+	<!--====== SERVICE PART START ======-->
+<section class="service-area pt-140 pb-110">
+    <div class="container">
+        <div class="row">
+            <div class="mx-auto col-xl-6 col-lg-7 col-md-10">
+                <div class="text-center section-title mb-60">
+                    <h1>Why Choose SwapOrbit?</h1>
+                    <p>At SwapOrbit, we empower you to buy and sell pre-loved items with ease, sustainability, and community-driven trust at the core of our platform.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-4 col-md-6 col-sm-8 col-11">
+                <div class="single-service">
+                    <div class="icon">
+                        <i class="lni lni-users"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Community-Centered</h3>
+                        <p>Our platform fosters a trusted community where users can connect, trade, and grow together, ensuring a reliable experience.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="col-lg-4 col-md-6 col-sm-8 col-11">
+                <div class="single-service">
+                    <div class="icon">
+                        <i class="lni lni-layout"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Clean and Intuitive Design</h3>
+                        <p>Navigate easily through our user-friendly platform, designed to make buying and selling second-hand products effortless.</p>
+                    </div>
+                </div>
+            </div> -->
+
+            <div class="col-lg-4 col-md-6 col-sm-8 col-11">
+                <div class="single-service">
+                    <div class="icon">
+                        <i class="lni lni-search"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Smart Search and Filters</h3>
+                        <p>Quickly find what you're looking for with intelligent search options and advanced filtering by category, price, and location.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="col-lg-4 col-md-6 col-sm-8 col-11">
+                <div class="single-service">
+                    <div class="icon">
+                        <i class="lni lni-world"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Local Connections</h3>
+                        <p>Facilitating connections within your local area, making it convenient to find and trade items near you.</p>
+                    </div>
+                </div>
+            </div> -->
+
+            <div class="col-lg-4 col-md-6 col-sm-8 col-11">
+                <div class="single-service">
+                    <div class="icon">
+                        <i class="lni lni-cog"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Customizable Listings</h3>
+                        <p>Personalize your product listings with detailed descriptions, images, and pricing to attract the right buyers.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="col-lg-4 col-md-6 col-sm-8 col-11">
+                <div class="single-service">
+                    <div class="icon">
+                        <i class="lni lni-laptop"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Fully Responsive</h3>
+                        <p>Access SwapOrbit anytime, anywhere on any device with our fully responsive platform designed for convenience.</p>
+                    </div>
+                </div>
+            </div> -->
+
+        </div>
+    </div>
+</section>
+<!--====== SERVICE PART ENDS ======-->
+
+
+	
+	<!--====== SUBSCRIBE PRODUCT PART START ======-->
+	<section class="subscribe-area ">
+		<div class="container">
+			<div class="subscribe-wrapper bg_cover " style="border-radius:30px;">
+				<div class="row align-items-center">
+					<div class="col-lg-7">
+						<div class="subscribe-content section-title">
+							<h1 class="text-white">Subscribe Our Newsletter</h1>
+							<p class="text-white">Buy and sell everything from used cars to mobile phones and computer or search for property.</p>
+						</div>
+					</div>
+					<div class="col-lg-5">
+						<div class="subscribe-form-wrapper">
+							<form action="#" class="subscribe-form">
+								<input type="email" name="sub-email" placeholder="Enter your Email">
+								<button><i class="lni lni-telegram-original"></i></button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--====== SUBSCRIBE PRODUCT PART ENDS ======-->
+
+			<br><br>
+
+	
+
+	<!--====== BACK TOP TOP PART START ======-->
+	<a href="#" class="back-to-top btn-hover"><i class="lni lni-chevron-up" style="margin-top: 11px;"></i></a>
+	<!--====== BACK TOP TOP PART ENDS ======-->
+
+
+	<!--====== Bootstrap js ======-->
+	<script src="/js/bootstrap.bundle-5.0.0.alpha-min.js"></script>
+
+	<!--====== Tiny slider js ======-->
+	<script src="/js/tiny-slider.js"></script>
+
+	<!--====== wow js ======-->
+	<script src="/js/wow.min.js"></script>
+
+	<!--====== glightbox js ======-->
+	<script src="/js/glightbox.min.js"></script>
+	
+	<!--====== Selectr js ======-->
+	<script src="/js/selectr.min.js"></script>
+
+	<!--====== Nouislider js ======-->
+	<script src="/js/nouislider.js"></script>
+
+	<!--====== Main js ======-->
+	<script src="/js/main.js"></script>
+
+	<script>
+
+		//========= glightbox
+		const myGallery = GLightbox({
+			'href': '/video/Free App Landing Page Template - AppLand.mp4',
+			'type': 'video',
+			'source': 'youtube', //vimeo, youtube or local
+			'width': 900,
+			'autoplayVideos': true,
+		});
+
+		//======== tiny slider for feature-product-carousel
+		tns({
+			slideBy: 'page',
+			autoplay: false,
+			mouseDrag: true,
+			gutter: 20,
+			nav: false,
+			controls: true,
+			controlsPosition: 'bottom',
+			controlsText: [
+				'<span class="prev"><i class="lni lni-chevron-left"></i></span>', 
+				'<span class="next"><i class="lni lni-chevron-right"></i></span>'
+			],
+			container: ".feature-product-carousel",
+			items: 1,
+			center: false,
+			autoplayTimeout: 5000,
+			swipeAngle: false,
+			speed: 400,
+			responsive: {
+				768: {
+					items: 2,
+				},
+
+				992: {
+					items: 2,
+				},
+
+				1200: {
+					items: 3,
+				}
+			}
+		});
+
+		//======== tiny slider for testimonial
+		tns({
+			slideBy: 'page',
+			autoplay: false,
+			mouseDrag: true,
+			gutter: 20,
+			nav: true,
+			controls: false,
+			container: ".testimonial-carousel",
+			items: 1,
+			center: false,
+			autoplayTimeout: 5000,
+			swipeAngle: false,
+			speed: 400,
+			responsive: {
+				768: {
+					items: 2,
+				},
+				1200: {
+					items: 3,
+				}
+			}
+		});
+	</script>
+
+
+
+
+
+
+
+	<!-- my code -->
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			const categoryButton = document.getElementById('category-button');
+			const categoryDropdown = document.getElementById('category-dropdown');
+			const categoryValue = document.getElementById('category-value');
+		
+			// Toggle dropdown on button click
+			categoryButton.addEventListener('click', function(e) {
+				e.stopPropagation();
+				categoryDropdown.classList.toggle('active');
+			});
+		
+			// Handle category selection
+			document.querySelectorAll('.category-list a').forEach(item => {
+				item.addEventListener('click', function(e) {
+					const value = this.getAttribute('href').split('=').pop();
+					const text = this.textContent;
+		
+					// Update hidden field and button text
+					categoryValue.value = value;
+					categoryButton.textContent = text;
+		
+					// Close dropdown
+					categoryDropdown.classList.remove('active');
+				});
+			});
+		
+			// Close dropdown when clicking outside
+			document.addEventListener('click', function(e) {
+				if (!categoryDropdown.contains(e.target) && !categoryButton.contains(e.target)) {
+					categoryDropdown.classList.remove('active');
+				}
+			});
+		});
+		
+    </script>
+
+	<!-- for loading more products -->
+
+	<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		const loadMoreBtn = document.getElementById('load-more');
+		const productsContainer = document.getElementById('products-container');
+		let currentPage = 1;
+	
+		if (loadMoreBtn) {
+			loadMoreBtn.addEventListener('click', async function() {
+				try {
+					currentPage++;
+					loadMoreBtn.disabled = true;
+					loadMoreBtn.textContent = 'Loading...';
+	
+					// Add loading indicator
+					const loadingIndicator = document.createElement('div');
+					loadingIndicator.className = 'text-center mt-3';
+					loadingIndicator.innerHTML = '<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>';
+					loadMoreBtn.parentNode.insertBefore(loadingIndicator, loadMoreBtn);
+	
+					console.log(`Fetching page ${currentPage} from /product`); // Debug log
+	
+					const response = await fetch(`/product?page=${currentPage}`, {
+						headers: {
+							'X-Requested-With': 'XMLHttpRequest'
+						}
+					});
+	
+					if (!response.ok) {
+						throw new Error(`HTTP error! status: ${response.status}`);
+					}
+	
+					const data = await response.json();
+					console.log('Received data:', data); // Debug log
+	
+					if (data.products && data.products.length > 0) {
+						const newProductsHTML = data.products
+							.filter(product => !product.isSold)
+							.map(product => `
+								<div class="col-xl-4 col-lg-6 col-md-6 product-card">
+									<div class="single-product">
+										<div class="product-img">
+											<a href="/product/${product._id}">
+												<img src="${product.images && product.images.length > 0 
+													? product.images[0].url 
+													: '/images/default-placeholder.png'}" 
+													alt="${product.title}">
+											</a>
+											<div class="product-action">
+												<!-- Favourite functionality -->
+												<form method="POST" action="/addToFavourites" class="favourite-form" data-product-id="${product._id}">
+													<button type="button" style="background: none; border: none;" class="favorite-btn" data-is-favorite="${product.isFavourite}">
+														${product.isFavourite 
+															? '<i class="fa fa-heart" style="color: #e63946; cursor: pointer;"></i>' 
+															: '<i class="fa fa-heart-o" style="color: #e63946; cursor: pointer;"></i>'}
+													</button>
+												</form>
+												<!-- Share button-->
+												<a href="javascript:void(0)" class="share">
+													<i class="lni lni-share"></i>
+												</a>
+											</div>
+										</div>
+										<div class="product-content">
+											<h3 class="name">
+												<a href="/product/${product._id}">${product.title}</a>
+											</h3>
+											<span class="update">Last Update: ${product.updatedAt ? new Date(product.updatedAt).toLocaleString() : "N/A"}</span>
+											<ul class="address">
+												<li>
+													<a href="javascript:void(0)"><i class="lni lni-calendar"></i> 
+														${product.createdAt ? new Date(product.createdAt).toLocaleDateString() : "N/A"}
+													</a>
+												</li>
+												<li>
+													<a href="javascript:void(0)"><i class="lni lni-map-marker"></i> 
+														${product.locationID 
+															? `${product.locationID.city}, ${product.locationID.state}, ${product.locationID.country}`
+															: "N/A"}
+													</a>
+												</li>
+												<li>
+													<a href="javascript:void(0)"><i class="lni lni-user"></i> 
+														${product.userID ? `${product.userID.username}` : "N/A"}
+													</a>
+												</li>
+												<li>
+													<a href="javascript:void(0)"><i class="lni lni-package"></i> 
+														${product.condition || "N/A"}
+													</a>
+												</li>
+											</ul>
+											<div class="product-bottom">
+												<h3 class="price">₹${product.price ? product.price.toLocaleString("en-IN") : "N/A"}</h3>
+											</div>
+										</div>
+									</div>
+								</div>
+							`).join('');
+	
+						productsContainer.insertAdjacentHTML('beforeend', newProductsHTML);
+					}
+	
+					// Hide load more button if no more products
+					if (!data.hasMore) {
+						loadMoreBtn.style.display = 'none';
+					}
+	
+					loadMoreBtn.disabled = false;
+					loadMoreBtn.textContent = 'Load More Products';
+	
+				} catch (error) {
+					console.error('Error loading products:', error);
+					loadMoreBtn.disabled = false;
+					loadMoreBtn.textContent = 'Load More Products';
+					
+					// Show error message to user
+					const errorDiv = document.createElement('div');
+					errorDiv.className = 'alert alert-danger mt-3';
+					errorDiv.textContent = 'Failed to load more products. Please try again later.';
+					loadMoreBtn.parentNode.insertBefore(errorDiv, loadMoreBtn);
+					
+					// Remove error message after 5 seconds
+					setTimeout(() => {
+						errorDiv.remove();
+					}, 5000);
+				} finally {
+					// Remove loading indicator if it exists
+					const loadingIndicator = document.querySelector('.spinner-border')?.parentNode;
+					if (loadingIndicator) {
+						loadingIndicator.remove();
+					}
+				}
+			});
+		}
+	});
+	</script>
+
+
+	
+		
+	<style>
+        /* Preserve original search area styles */
+        .search-area {
+            position: relative;
+        }
+        
+        .search-wrapper {
+            position: relative;
+        }
+        
+        .search-input {
+            position: relative;
+        }
+        
+        /* Category dropdown styles matching original design */
+        .mega-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #eee;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 1000;
+            display: none;
+            padding: 15px;
+            margin-top: 5px;
+            width: 100%;
+            min-width: 800px;
+        }
+        
+        .mega-dropdown.active {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        
+        .category-section {
+            min-width: 180px;
+        }
+        
+        .category-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+		.category-title a:hover {
+            color: #ff6b6b;
+			font-size: 27px;
+			transition: color 0.3s ease, font-size 0.3s ease; 
+        }
+        
+        .category-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .category-list li {
+            padding: 5px 0;
+        }
+        
+        .category-list a {
+            text-decoration: none;
+            color: #555;
+            display: block;
+            transition: color 0.2s;
+        }
+        
+        .category-list a:hover {
+            color: #ff6b6b;
+			font-size: 18px;
+			transition: color 0.3s ease, font-size 0.3s ease; 
+        }
+        
+        /* Keep original form styling */
+        .search-input select,
+        .search-input input,
+        .category-selector {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+
+
+	
+/* Product listing styling */
+
+
+/* Ensure the product card has a fixed height */
+.product-card {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+	margin-bottom: 20px;
+}
+
+.single-product {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fff;
+    transition: transform 0.3s ease;
+}
+
+.single-product:hover {
+    transform: translateY(-5px);
+}
+
+/* Set a fixed height for product images */
+.product-img img {
+    width: 100%;
+    height: 200px; /* Adjust this value to your preference */
+    object-fit: cover;
+    display: block;
+}
+
+/* Ensure product-content section occupies the rest of the card */
+.product-content {
+    padding: 15px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Align elements neatly inside the product-content */
+.product-content h3.name {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.product-content ul.address {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.product-content ul.address li {
+    margin-bottom: 5px;
+}
+
+.product-bottom {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333;
+    text-align: right;
+}
+
+/* favourite-icon styling */
+
+.favourite-icon {
+    background-color: white; /* White background for the circle */
+    border-radius: 50%; /* Makes it circular */
+    padding: 10px; /* Space around the icon */
+    color: #e63946; /* Heart color */
+    font-size: 11px; /* Adjust icon size */
+    display: inline-flex; /* Align the icon inside the circle */
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional shadow for depth */
+    transition: background-color 0.3s, transform 0.2s;
+	margin-bottom: 10px;
+}
+
+.favourite-icon:hover {
+    background-color: #f8f9fa; /* Slightly darker background on hover */
+    transform: scale(1.1); /* Slight zoom effect on hover */
+}
+
+
+    </style>
+
+<!-- Script for homepage hero section animation  -->
+<script>
+	const slides = [
+		{
+			image: "https://images.pexels.com/photos/5673488/pexels-photo-5673488.jpeg",
+			title: "Discover Hidden Treasures",
+			subtitle: "One person's pre-loved item is another's perfect find"
+		},
+		{
+			image: "https://images.pexels.com/photos/6214477/pexels-photo-6214477.jpeg",
+			title: "Buy & Sell With Confidence",
+			subtitle: "From vintage collectibles to modern tech, all in one place"
+		},
+		{
+			image: "https://images.pexels.com/photos/919436/pexels-photo-919436.jpeg",
+			title: "Join Our Community",
+			subtitle: "Connect with buyers and sellers in your neighborhood"
+		}
+	];
+
+	const content = document.getElementById('content');
+	const indicators = document.querySelectorAll('.indicator');
+	let currentSlide = 0;
+
+	function updateContent() {
+		const { title, subtitle } = slides[currentSlide];
+
+		// Add fade-out effect
+		content.classList.remove('fade-in');
+		content.classList.add('fade-out');
+
+		setTimeout(() => {
+			// Update text content after fade-out
+			content.querySelector('h1').textContent = title;
+			content.querySelector('p:first-of-type').textContent = subtitle;
+
+			// Add fade-in effect
+			content.classList.remove('fade-out');
+			content.classList.add('fade-in');
+		}, 500); // Matches the duration of the fade-out animation
+
+		indicators.forEach((indicator, index) => {
+			indicator.classList.toggle('active', index === currentSlide);
+		});
+	}
+
+	// Automatically switch slides every 5 seconds
+	setInterval(() => {
+		currentSlide = (currentSlide + 1) % slides.length;
+		updateContent();
+	}, 5000);
+
+	updateContent();
+
+</script>
+
+<!-- script for search bar keywords animation -->
+<script>
+	const keywordInput = document.getElementById('keyword');
+	const placeholderWords = [" ''Cars'' ", " ''Pets'' ","''Mobile''","''Bikes''"]; // Add more words if needed
+	let currentWordIndex = 0;
+
+	function updatePlaceholder() {
+		currentWordIndex = (currentWordIndex + 1) % placeholderWords.length; // Loop through the words
+		keywordInput.setAttribute('placeholder', `Search ${placeholderWords[currentWordIndex]}`);
+	}
+
+	// Change the placeholder every 2 seconds
+	setInterval(updatePlaceholder, 2000);
+</script>
+</body>
+
+</html>

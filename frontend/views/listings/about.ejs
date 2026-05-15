@@ -1,0 +1,1416 @@
+
+<html class="no-js" lang="en">
+   
+<head>
+	<meta charset="utf-8">
+
+	<!--====== Title ======-->
+	<title>SwapOrbit</title>
+
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!--====== Favicon Icon ======-->
+	<link rel="shortcut icon" href="/images/favicon.png" type="image/png">
+
+	<!--====== Animate CSS ======-->
+	<link rel="stylesheet" href="/css/animate.css">
+
+	<!--====== Tiny slider CSS ======-->
+	<link rel="stylesheet" href="/css/tiny-slider.css">
+
+	<!--====== glightbox CSS ======-->
+	<link rel="stylesheet" href="/css/glightbox.min.css">
+
+	<!--====== Line Icons CSS ======-->
+	<link rel="stylesheet" href="/css/LineIcons.2.0.css">
+
+	<!--====== Selectr CSS ======-->
+	<link rel="stylesheet" href="/css/selectr.css">
+
+	<!--====== Nouislider CSS ======-->
+	<link rel="stylesheet" href="/css/nouislider.css">
+
+	<!--====== Bootstrap CSS ======-->
+	<link rel="stylesheet" href="/css/bootstrap-5.0.5-alpha.min.css">
+
+	<!--====== Style CSS ======-->
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+
+    <style>
+        .search::before,
+        .search::after {
+            content: none !important;
+        
+        }
+       
+    /* Base Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  :root {
+    /* Color System */
+    --primary: #FF6B6B;
+    --primary-light: #FF8787;
+    --primary-dark: #FF4F4F;
+    --neutral-100: #F9FAFB;
+    --neutral-200: #F3F4F6;
+    --neutral-300: #E5E7EB;
+    --neutral-400: #D1D5DB;
+    --neutral-500: #9CA3AF;
+    --neutral-600: #6B7280;
+    --neutral-700: #4B5563;
+    --neutral-800: #374151;
+    --neutral-900: #1F2937;
+    
+    /* Typography */
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    --font-heading: var(--font-sans);
+    --font-body: var(--font-sans);
+    
+    /* Spacing (8px system) */
+    --space-1: 0.25rem;  /* 4px */
+    --space-2: 0.5rem;   /* 8px */
+    --space-3: 0.75rem;  /* 12px */
+    --space-4: 1rem;     /* 16px */
+    --space-5: 1.25rem;  /* 20px */
+    --space-6: 1.5rem;   /* 24px */
+    --space-8: 2rem;     /* 32px */
+    --space-10: 2.5rem;  /* 40px */
+    --space-12: 3rem;    /* 48px */
+    --space-16: 4rem;    /* 64px */
+    --space-20: 5rem;    /* 80px */
+    --space-24: 6rem;    /* 96px */
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    
+    /* Border Radius */
+    --radius-sm: 0.125rem;
+    --radius: 0.25rem;
+    --radius-md: 0.375rem;
+    --radius-lg: 0.5rem;
+    --radius-xl: 0.75rem;
+    --radius-2xl: 1rem;
+    --radius-3xl: 1.5rem;
+    --radius-full: 9999px;
+    
+    /* Transitions */
+    --transition-fast: 150ms;
+    --transition: 250ms;
+    --transition-slow: 350ms;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-family: var(--font-body);
+    line-height: 1.5;
+    color: var(--neutral-800);
+    background-color: var(--neutral-100);
+    overflow-x: hidden;
+  }
+  
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color var(--transition) var(--ease);
+  }
+  
+  a:hover {
+    color: var(--primary-dark);
+  }
+  
+  /* Typography */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--neutral-900);
+    margin-bottom: var(--space-4);
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    line-height: 1.1;
+  }
+  
+  h2 {
+    font-size: 2rem;
+  }
+  
+  h3 {
+    font-size: 1.5rem;
+  }
+  
+  p {
+    margin-bottom: var(--space-4);
+  }
+  
+  .subheading {
+    font-size: 1.25rem;
+    color: var(--neutral-700);
+  }
+  
+  /* Layout */
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--space-4);
+  }
+  
+  section {
+    padding: var(--space-16) 0;
+  }
+  
+  .centered-title {
+    text-align: center;
+    margin-bottom: var(--space-8);
+  }
+  
+  /* Hero */
+  .hero {
+    padding: var(--space-24) 0 var(--space-16);
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+    color: white;
+    text-align: center;
+  }
+  
+  .hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .hero h1 {
+    color: white;
+    font-size: 3.5rem;
+    margin-bottom: var(--space-6);
+  }
+  
+  .hero .subheading {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.5rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  /* Mission */
+  .mission .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-8);
+    align-items: center;
+  }
+  
+  .mission-content p {
+    font-size: 1.125rem;
+  }
+  
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+  }
+  
+  .stat-card {
+    background-color: white;
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    text-align: center;
+    transition: transform var(--transition) var(--ease);
+  }
+  
+  .stat-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .stat-card h3 {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: var(--space-2);
+  }
+  
+  .stat-card p {
+    font-size: 1rem;
+    color: var(--neutral-600);
+    margin-bottom: 0;
+  }
+  
+  /* Values */
+  .values {
+    background-color: var(--neutral-200);
+  }
+  
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-6);
+  }
+  
+  .value-card {
+    background-color: white;
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    text-align: center;
+    transition: transform var(--transition) var(--ease), box-shadow var(--transition) var(--ease);
+  }
+  
+  .value-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .value-icon {
+    color: var(--primary);
+    width: 48px;
+    height: 48px;
+    margin: 0 auto var(--space-4);
+  }
+  
+  .value-card h3 {
+    margin-bottom: var(--space-2);
+  }
+  
+  .value-card p {
+    color: var(--neutral-700);
+    margin-bottom: 0;
+  }
+  
+  /* Timeline */
+  .timeline-container {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .timeline-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 3px;
+    background-color: var(--primary-light);
+    transform: translateX(-50%);
+  }
+  
+  .timeline-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--space-8);
+    position: relative;
+  }
+  
+  .timeline-item:last-child {
+    margin-bottom: 0;
+  }
+  
+  .timeline-item:nth-child(odd) {
+    flex-direction: row-reverse;
+  }
+  
+  .timeline-date {
+    min-width: 100px;
+    padding: var(--space-2) var(--space-4);
+    background-color: var(--primary);
+    color: white;
+    text-align: center;
+    border-radius: var(--radius);
+    font-weight: 600;
+    position: relative;
+    z-index: 2;
+    align-self: flex-start;
+  }
+  
+  .timeline-content {
+    width: calc(50% - var(--space-8));
+    padding: var(--space-6);
+    background-color: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+  }
+  
+  .timeline-content h3 {
+    color: var(--primary-dark);
+    margin-bottom: var(--space-2);
+  }
+  
+  .timeline-content p {
+    margin-bottom: 0;
+  }
+  
+  /* Testimonials */
+  .testimonials {
+    background-color: var(--neutral-200);
+  }
+  
+  .testimonial-slider {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    min-height: 200px;
+  }
+  
+  .testimonial-slide {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity var(--transition) var(--ease);
+    background-color: white;
+    padding: var(--space-8);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    text-align: center;
+  }
+  
+  .testimonial-slide.active {
+    opacity: 1;
+    z-index: 1;
+  }
+  
+  .testimonial-text {
+    font-size: 1.25rem;
+    font-style: italic;
+    margin-bottom: var(--space-6);
+    position: relative;
+  }
+  
+  .testimonial-text::before,
+  .testimonial-text::after {
+    content: '"';
+    font-size: 3rem;
+    color: var(--primary-light);
+    position: absolute;
+    opacity: 0.3;
+  }
+  
+  .testimonial-text::before {
+    left: -20px;
+    top: -20px;
+  }
+  
+  .testimonial-text::after {
+    right: -20px;
+    bottom: -40px;
+  }
+  
+  .author-name {
+    font-weight: 600;
+    margin-bottom: 0;
+  }
+  
+  .author-location {
+    color: var(--neutral-600);
+    font-size: 0.875rem;
+    margin-bottom: 0;
+  }
+  
+  .testimonial-controls {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-top: var(--space-8);
+  }
+  
+  .testimonial-control {
+    width: 12px;
+    height: 12px;
+    border-radius: var(--radius-full);
+    background-color: var(--neutral-400);
+    border: none;
+    cursor: pointer;
+    transition: background-color var(--transition) var(--ease), transform var(--transition-fast) var(--ease);
+  }
+  
+  .testimonial-control:hover {
+    transform: scale(1.2);
+  }
+  
+  .testimonial-control.active {
+    background-color: var(--primary);
+  }
+  
+  /* CTA */
+  .cta {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+    color: white;
+    text-align: center;
+  }
+  
+  .cta-content {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  .cta h2 {
+    color: white;
+  }
+  
+  .cta p {
+    font-size: 1.25rem;
+    margin-bottom: var(--space-8);
+  }
+  
+  .cta-buttons {
+    display: flex;
+    gap: var(--space-4);
+    justify-content: center;
+  }
+  
+  .btn {
+    display: inline-block;
+    padding: var(--space-3) var(--space-6);
+    border-radius: var(--radius);
+    font-weight: 600;
+    transition: all var(--transition) var(--ease);
+    cursor: pointer;
+  }
+  
+  .btn-primary {
+    background-color: white;
+    color: var(--primary);
+  }
+  
+  .btn-primary:hover {
+    background-color: var(--neutral-200);
+    color: var(--primary-dark);
+    transform: translateY(-2px);
+  }
+  
+  .btn-secondary {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+  }
+  
+  .btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    transform: translateY(-2px);
+  }
+  
+  /* Animation Classes */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+  }
+  
+  .slide-in-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+  }
+  
+  .slide-in-right {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+  }
+  
+  .slide-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+  }
+  
+  .delay-1 {
+    transition-delay: 0.1s;
+  }
+  
+  .delay-2 {
+    transition-delay: 0.2s;
+  }
+  
+  .delay-3 {
+    transition-delay: 0.3s;
+  }
+  
+  /* Visible animations */
+  .fade-in.visible,
+  .slide-in-left.visible,
+  .slide-in-right.visible,
+  .slide-up.visible {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    h1 {
+      font-size: 2.25rem;
+    }
+    
+    h2 {
+      font-size: 1.75rem;
+    }
+    
+    h3 {
+      font-size: 1.25rem;
+    }
+    
+    .values-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .mission .container {
+      grid-template-columns: 1fr;
+      gap: var(--space-10);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    section {
+      padding: var(--space-10) 0;
+    }
+    
+    .stats {
+      grid-template-columns: 1fr;
+    }
+    
+    .timeline-container::before {
+      left: 20px;
+    }
+    
+    .timeline-item,
+    .timeline-item:nth-child(odd) {
+      flex-direction: row;
+    }
+    
+    .timeline-date {
+      min-width: 80px;
+      font-size: 0.875rem;
+    }
+    
+    .timeline-content {
+      width: calc(100% - 100px);
+      margin-left: auto;
+    }
+    
+    .cta-buttons {
+      flex-direction: column;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    h1 {
+      font-size: 2rem;
+    }
+    
+    .values-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .hero .subheading {
+      font-size: 1.25rem;
+    }
+  }
+
+ 
+
+ /* Apply hover effect to nav links */
+ .navbar-nav .nav-item .page-scroll {
+  font-family: "Roboto", sans-serif;
+  color: #333F57; /* Default color */
+  transition: color 0.3s ease; /* Smooth transition */
+}
+
+.navbar-nav .nav-item .page-scroll:hover {
+  color: #FF6B6B; /* Hover color */
+}
+
+
+
+
+
+
+
+
+
+
+/* Footer design */
+
+
+
+a {
+  text-decoration: none;
+  color: #9ca3af;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: #ffffff;
+}
+
+ul {
+  list-style: none;
+}
+
+
+/* Footer Styles */
+footer {
+  background-color: #1a202c;
+  
+  color: #d1d5db;
+}
+
+.footer-content {
+  padding: 4rem 1rem 1.5rem;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+}
+
+/* About Section */
+.footer-about {
+  margin-bottom: 1rem;
+}
+
+.footer-title {
+  color: #ffffff;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.footer-about p {
+  color: #9ca3af;
+  margin-bottom: 1rem;
+}
+
+.social-icons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.social-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+.social-icon svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.facebook {
+  background-color: #2563eb;
+}
+
+.facebook:hover {
+  background-color: #1d4ed8;
+}
+
+.twitter {
+  background-color: #60a5fa;
+}
+
+.twitter:hover {
+  background-color: #3b82f6;
+}
+
+.instagram {
+  background-color: #db2777;
+}
+
+.instagram:hover {
+  background-color: #be185d;
+}
+
+.linkedin {
+  background-color: #1e40af;
+}
+
+.linkedin:hover {
+  background-color: #1e3a8a;
+}
+
+/* Quick Links */
+.footer-links h3 {
+  color: #ffffff;
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.footer-links li {
+  margin-bottom: 0.5rem;
+}
+
+/* Contact Info */
+.footer-contact h3 {
+  color: #ffffff;
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+}
+
+.contact-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 0.75rem;
+  color: #60a5fa;
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+}
+
+/* Download App */
+.footer-app h3 {
+  color: #ffffff;
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.footer-app p {
+  color: #9ca3af;
+  margin-bottom: 1rem;
+}
+
+.app-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.app-button img {
+  height: 2.5rem;
+}
+
+/* Copyright */
+.copyright {
+  border-top: 1px solid #374151;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+  text-align: center;
+}
+
+.copyright-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.copyright-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.copyright-links a {
+  margin: 0 0.75rem;
+}
+
+/* Media Queries */
+@media (min-width: 768px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .copyright-content {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  .copyright-links {
+    margin-top: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .footer-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+
+
+.header_area {
+  position: -webkit-sticky; /* For Safari */
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Ensures the header stays on top of other elements */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Adds a shadow for better visibility */
+}
+
+.header_navbar {
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for background or shadow changes */
+}
+
+.header_navbar.scrolled {
+  background-color: #f8f9fa; /* Change the background color when scrolling */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Adds shadow when scrolled */
+}
+  </style>
+</head>
+<body>
+
+
+  
+        <!--====== HEADER PART START ======-->
+
+	<header class="header_area">
+		<div id="header_navbar" class="header_navbar" style="background-color:white;">
+			<div class="container position-relative">
+				<div class="row align-items-center">
+					<div class="col-xl-12">
+						<nav class="navbar navbar-expand-lg" style="background-color:white;">
+							<a class="navbar-brand" href="/product">
+								<!-- <img id="logo" src="/images/logo/logo-2.svg" alt="Logo"> -->
+                <img id="logo" src="/images/logo/logo8.png" alt="Logo">
+								
+
+							</a>
+							<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+								aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+								<span class="toggler-icon"></span>
+								<span class="toggler-icon"></span>
+								<span class="toggler-icon"></span>
+							</button>
+							<div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+								<ul id="nav" class="navbar-nav">
+									<li class="nav-item">
+										<a class="page-scroll active" href="/product"> <i class="fa-solid fa-house "></i> &nbsp;Home</a>
+									</li>
+									
+									<li class="nav-item">
+										<a class="page-scroll" href="/category">
+                                            <i class="fa-solid fa-layer-group"></i> &nbsp;Categories</a>
+									</li>
+									<li class="nav-item">
+                  <a class="page-scroll" href="/about"> <i class="fa-solid fa-globe"></i> &nbsp;About </a>
+									</li>
+								</ul>
+							</div>
+							<ul class="header-btn d-md-flex">
+                                <li>
+                                <a href="/product#search-section" class="main-btn account-btn search">
+                                    <span><i class="fa-solid fa-magnifying-glass"></i> &nbsp;Search</span>
+                                </a>
+                                </li>
+
+								<% if (currUser) { %>
+									<!-- My Account Dropdown -->
+
+									
+								<li>
+									<a href="#" class="main-btn account-btn">
+										<span class="d-md-none"><i class="lni lni-user"></i></span>
+										<span class="d-none d-md-block"><i class="fa-solid fa-user" style="color:#ff6b6b;"></i>  &nbsp;My Account</span>
+									</a>
+									<ul class="dropdown-nav">
+										<!-- <li><a href="dashboard.html">Dashboard</a></li> -->
+										<li><a href="/profile"><i class="fa-solid fa-user-tie"></i> &nbsp;Profile Settings</a></li>
+										<!-- <li><a href="/product/newProduct">Post Ad</a></li> -->
+										<li><a href="/product/myads"><i class="fa-solid fa-list-ul"></i> &nbsp;My Ads</a></li>
+										<!-- <li><a href="offers.html">Offers/Messages</a></li> -->
+										<!-- <li><a href="payments.html">Payments</a></li> -->
+										<li><a href="/favourites"><i class="fa-solid fa-heart"></i> &nbsp;Favourites</a></li>
+										<li><a href="/privacy"><i class="fa-solid fa-user-lock"></i> &nbsp;Privacy</a></li>
+										<li><a href="/logout"><i class="fa-solid fa-right-from-bracket fa-flip-horizontal"></i> &nbsp;Sign Out</a></li>
+									</ul>
+								</li>
+								<li>
+									<a href="/product/newProduct" class="main-btn btn-hover d-none d-md-block"><i class="fa-solid fa-plus"></i> &nbsp;Post An Ad</a>
+								</li>
+
+								<% } else { %>
+									<!-- Login Option -->
+									<li>
+										<a href="/login" class="main-btn account-btn">
+										<span class="d-md-none"><i class="lni lni-user"></i></span>
+										<span class="d-none d-md-block"><i class="fa-solid fa-right-to-bracket" style="color: #ff6b6b;"></i> &nbsp;Login</span>
+										</a>
+									</li>
+									<% } %>
+
+							</ul>
+						</nav> <!-- navbar -->
+					</div>
+				</div> <!-- row -->
+			</div> <!-- container -->
+		</div> <!-- header navbar -->
+	</header>
+
+	<!--====== HEADER PART ENDS ======-->
+
+
+
+
+
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content fade-in">
+          <h1>Reimagine the Way We Trade</h1>
+          <p class="subheading">At SwapOrbit, we're building a community where commerce means connection.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mission">
+      <div class="container">
+        <div class="mission-content slide-in-left">
+          <h2>Our Mission</h2>
+          <p>SwapOrbit was founded with a simple yet powerful vision: to create a marketplace that empowers individuals to buy and sell with confidence, fostering a sustainable economy where quality products find new homes.</p>
+          <p>We believe in the potential of peer-to-peer commerce to build communities, reduce waste, and create opportunities for everyone.</p>
+        </div>
+        <div class="stats slide-in-right">
+          <div class="stat-card">
+            <h3>56K+</h3>
+            <p>Active Users</p>
+          </div>
+          <div class="stat-card">
+            <h3>25K+</h3>
+            <p>Regular Ads</p>
+          </div>
+          <div class="stat-card">
+            <h3>15+</h3>
+            <p>Countries</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="values">
+      <div class="container">
+        <h2 class="centered-title fade-in">Our Values</h2>
+        <div class="values-grid">
+          <div class="value-card slide-up">
+            <i data-lucide="shield" class="value-icon"></i>
+            <h3>Trust & Safety</h3>
+            <p>We prioritize creating a secure environment where users can trade with confidence.</p>
+          </div>
+          <div class="value-card slide-up delay-1">
+            <i data-lucide="users" class="value-icon"></i>
+            <h3>Community</h3>
+            <p>We foster connections that go beyond transactions, building lasting relationships.</p>
+          </div>
+          <div class="value-card slide-up delay-2">
+            <i data-lucide="leaf" class="value-icon"></i>
+            <h3>Sustainability</h3>
+            <p>We promote responsible consumption by giving products a second life.</p>
+          </div>
+          <div class="value-card slide-up delay-3">
+            <i data-lucide="lightbulb" class="value-icon"></i>
+            <h3>Innovation</h3>
+            <p>We constantly evolve our platform to provide the best possible experience.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="timeline">
+        <div class="container">
+          <h2 class="centered-title fade-in">Our Journey</h2>
+          <div class="timeline-container">
+            <div class="timeline-item slide-in-left">
+                <div class="timeline-date">The Vision</div>
+                <div class="timeline-content">
+                <h3>The Beginning</h3>
+                <p>SwapOrbit was founded with a vision to redefine the way people buy and sell pre-owned products, making the process seamless, sustainable, and accessible for everyone.</p>
+              </div>
+            </div>
+            <div class="timeline-item slide-in-right">
+                <div class="timeline-date">The Launch</div>
+                <div class="timeline-content">
+                <h3>Connecting Communities</h3>
+                <p>We launched our platform to empower local communities, creating a trusted space where users could connect, trade, and discover value in pre-loved items.</p>
+              </div>
+            </div>
+            <div class="timeline-item slide-in-left">
+                <div class="timeline-date">Expanding Horizons</div>
+              <div class="timeline-content">
+                <h3>Enhanced Experiences</h3>
+                <p>Focused on delivering a user-centric experience, we introduced intuitive tools and personalized features that made finding and trading items simpler and more enjoyable.</p>
+              </div>
+            </div>
+            <div class="timeline-item slide-in-right">
+                <div class="timeline-date">Growing Together</div>
+              <div class="timeline-content">
+                <h3>Scaling New Heights</h3>
+                <p>With growing trust and popularity, SwapOrbit expanded its reach across major cities, establishing itself as a go-to platform for sustainable trading.</p>
+              </div>
+            </div>
+            <div class="timeline-item slide-in-left">
+                <div class="timeline-date">The Future</div>
+              <div class="timeline-content">
+                <h3>Innovating for the Future</h3>
+                <p>We introduced smart tools to enhance user engagement and simplify the process of buying and selling, fostering a seamless and rewarding experience for our community.</p>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </section>
+      
+
+    <section class="testimonials">
+      <div class="container">
+        <h2 class="centered-title fade-in">What Our Users Say</h2>
+        <div class="testimonial-slider">
+          <div class="testimonial-slide active">
+            <p class="testimonial-text">"SwapOrbit changed how I think about shopping. I've found unique items I would never have discovered elsewhere, and made friends along the way."</p>
+            <div class="testimonial-author">
+              <p class="author-name">Jessica R.</p>
+              <p class="author-location">New York, USA</p>
+            </div>
+          </div>
+          <div class="testimonial-slide">
+            <p class="testimonial-text">"As a small business owner, SwapOrbit has given me a platform to reach customers globally without the overhead of traditional e-commerce."</p>
+            <div class="testimonial-author">
+              <p class="author-name">Carlos M.</p>
+              <p class="author-location">Barcelona, Spain</p>
+            </div>
+          </div>
+          <div class="testimonial-slide">
+            <p class="testimonial-text">"The security features give me peace of mind when trading with people around the world. Best marketplace experience I've had."</p>
+            <div class="testimonial-author">
+              <p class="author-name">Aisha K.</p>
+              <p class="author-location">Dubai, UAE</p>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-controls">
+          <button class="testimonial-control" data-index="0" aria-label="Testimonial 1"></button>
+          <button class="testimonial-control" data-index="1" aria-label="Testimonial 2"></button>
+          <button class="testimonial-control" data-index="2" aria-label="Testimonial 3"></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="container">
+        <div class="cta-content fade-in">
+          <h2>Join the SwapOrbit Community</h2>
+          <p style="color: white;">Experience a new way to buy, sell, and connect with like-minded individuals around the world.</p>
+          <div class="cta-buttons">
+            <a href="/signup" class="btn btn-primary">Sign Up Now</a>
+           
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+
+
+  <!--====== BACK TOP TOP PART START ======-->
+	<a href="#" class="back-to-top btn-hover"><i class="lni lni-chevron-up" style="margin-top: 11px;"></i></a>
+	<!--====== BACK TOP TOP PART ENDS ======-->
+
+
+
+<!--====== FOOTER PART START ======-->
+
+<footer>
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-grid">
+        <!-- About Section -->
+        <div class="footer-about">
+          <h3 class="footer-title">SwapOrbit</h3>
+          <p>
+            SwapOrbit is the premier marketplace for buying and selling everything from vehicles to real estate and more. Join millions of users who trust our platform.
+          </p>
+          <div class="social-icons">
+            <a href="#" class="social-icon facebook">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+            </a>
+            <a href="#" class="social-icon twitter">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
+            </a>
+            <a href="#" class="social-icon instagram">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+            </a>
+            <a href="#" class="social-icon linkedin">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms & Conditions</a></li>
+            <li><a href="#">FAQs & Help</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="footer-contact">
+          <h3>Contact Us</h3>
+          <ul>
+            <li class="contact-item">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              <span>Vadodara, India</span>
+            </li>
+            <li class="contact-item">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              <span>+91 70234 55900</span>
+            </li>
+            <li class="contact-item">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+              <span>info@swaporbit.com</span>
+            </li>
+            <li class="contact-item">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+              <span>www.swaporbit.com</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Download App -->
+        <div class="footer-app">
+          <h3>Download App</h3>
+          <p>Get our mobile app for a better experience</p>
+          <div class="app-buttons">
+      <a href="#" class="app-button">
+      <img 
+        src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Download_on_the_App_Store_Badge.svg/1280px-Download_on_the_App_Store_Badge.svg.png" 
+        alt="App Store" 
+        class="h-10"
+      />
+      </a>
+      <a href="#" class="app-button">
+      <img 
+        src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/1280px-Google_Play_Store_badge_EN.svg.png" 
+        alt="Google Play" 
+        class="h-10"
+      />
+      </a>
+
+          </div>
+        </div>
+      </div>
+      
+      <!-- Copyright -->
+      <div class="copyright">
+        <div class="copyright-content">
+          <p>© 2025 SwapOrbit. All rights reserved.</p>
+          <div class="copyright-links">
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+            <a href="#">Support</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  <!--====== FOOTER PART ENDS ======-->
+  
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+  </script>
+
+  <script>
+    // Intersection Observer for animations
+document.addEventListener('DOMContentLoaded', function() {
+    // Setup Intersection Observer for animation elements
+    const animatedElements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .slide-up');
+    
+    const animationObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          // Once the animation has played, we can stop observing the element
+          animationObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      root: null,
+      threshold: 0.1, // Trigger when at least 10% of the element is visible
+      rootMargin: '0px 0px -50px 0px' // Negative bottom margin for earlier animation trigger
+    });
+    
+    animatedElements.forEach(element => {
+      animationObserver.observe(element);
+    });
+    
+    // Testimonial Slider
+    const testimonialSlides = document.querySelectorAll('.testimonial-slide');
+    const testimonialControls = document.querySelectorAll('.testimonial-control');
+    let currentSlide = 0;
+    let testimonialInterval;
+    
+    // Function to show a specific slide
+    function showSlide(index) {
+      // Remove active class from all slides and controls
+      testimonialSlides.forEach(slide => slide.classList.remove('active'));
+      testimonialControls.forEach(control => control.classList.remove('active'));
+      
+      // Add active class to current slide and control
+      testimonialSlides[index].classList.add('active');
+      testimonialControls[index].classList.add('active');
+      
+      // Update current slide index
+      currentSlide = index;
+    }
+    
+    // Initialize testimonial slider
+    function initTestimonialSlider() {
+      if (testimonialSlides.length === 0) return;
+      
+      // Set first slide as active
+      showSlide(0);
+      
+      // Add click event listeners to controls
+      testimonialControls.forEach((control, index) => {
+        control.addEventListener('click', () => {
+          showSlide(index);
+          resetInterval();
+        });
+      });
+      
+      // Auto-rotate slides
+      startInterval();
+    }
+    
+    function startInterval() {
+      testimonialInterval = setInterval(() => {
+        let nextSlide = (currentSlide + 1) % testimonialSlides.length;
+        showSlide(nextSlide);
+      }, 5000);
+    }
+    
+    function resetInterval() {
+      clearInterval(testimonialInterval);
+      startInterval();
+    }
+    
+    initTestimonialSlider();
+    
+    // Mobile Menu Toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    
+    if (menuToggle && navLinks) {
+      menuToggle.addEventListener('click', () => {
+        navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        
+        if (navLinks.style.display === 'flex') {
+          // Create mobile menu styling on the fly
+          navLinks.style.position = 'absolute';
+          navLinks.style.top = '80px';
+          navLinks.style.left = '0';
+          navLinks.style.width = '100%';
+          navLinks.style.backgroundColor = 'white';
+          navLinks.style.flexDirection = 'column';
+          navLinks.style.padding = '1rem';
+          navLinks.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+          
+          // Style the links for mobile
+          const links = navLinks.querySelectorAll('.nav-link');
+          links.forEach(link => {
+            link.style.padding = '0.75rem 0';
+            link.style.borderBottom = '1px solid #E5E7EB';
+          });
+          
+          // Remove border from last link
+          if (links.length > 0) {
+            links[links.length - 1].style.borderBottom = 'none';
+          }
+        } else {
+          // Reset styles when menu is closed
+          navLinks.removeAttribute('style');
+          const links = navLinks.querySelectorAll('.nav-link');
+          links.forEach(link => {
+            link.removeAttribute('style');
+          });
+        }
+      });
+      
+      // Close mobile menu when window is resized to desktop width
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 768 && navLinks.style.display === 'flex') {
+          navLinks.removeAttribute('style');
+          const links = navLinks.querySelectorAll('.nav-link');
+          links.forEach(link => {
+            link.removeAttribute('style');
+          });
+        }
+      });
+    }
+    
+    // Scroll animations for header
+    const header = document.querySelector('.header');
+    let lastScrollPosition = 0;
+    
+    function handleScroll() {
+      const currentScrollPosition = window.pageYOffset;
+      
+      // Add shadow when scrolled
+      if (currentScrollPosition > 20) {
+        header.style.boxShadow = 'var(--shadow-md)';
+      } else {
+        header.style.boxShadow = 'var(--shadow)';
+      }
+      
+      lastScrollPosition = currentScrollPosition;
+    }
+    
+    window.addEventListener('scroll', handleScroll);
+    
+    // Initialize Lucide icons if script is loaded
+    if (typeof lucide !== 'undefined') {
+      lucide.createIcons();
+    }
+  });
+  </script>
+</body>
+</html>

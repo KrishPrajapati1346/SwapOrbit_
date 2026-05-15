@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/backend/app.js"
+    }
+  ],
+  "functions": {
+    "backend/app.js": {
+      "includeFiles": "frontend/**"
+    }
+  }
+}

@@ -1,0 +1,454 @@
+<% layout("/layouts/boilerplate") %>
+
+
+<head>
+    <style>
+        /* Professional Mark as Sold Button Styles */
+        .sold-btn {
+          background-color: #49c165;
+          height: 40px;
+          width: 130px;
+          color: white;
+          border: none;
+          padding: 6px 12px;
+          border-radius: 4px;
+          font-size: 13px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sold-btn:hover {
+          background-color: #38a850;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sold-btn:active {
+          transform: translateY(0);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sold-btn i {
+          font-size: 16px;
+        }
+        
+        .sold-status {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          color: #6c757d;
+          font-size: 14px;
+          font-style: italic;
+        }
+		
+		
+		
+
+
+
+
+
+
+
+/* Three-dot menu styles */
+.dropdown {
+	position: relative;
+	display: inline-block;
+  }
+  
+  .three-dots-btn {
+	background: none;
+	border: none;
+	color: #666;
+	font-size: 20px;
+	cursor: pointer;
+	padding: 5px;
+	line-height: 1;
+
+  }
+  
+  .dropdown-menu {
+	display: none;
+	position: absolute;
+	right: 0;
+	min-width: 150px;
+	background-color: #fff;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	border-radius: 5px;
+	z-index: 10;
+  }
+  
+  .dropdown-item {
+	display: block;
+	width: 100%;
+	background: none;
+	border: none;
+	text-align: left;
+	padding: 8px 15px;
+	font-size: 14px;
+	color: #333;
+	cursor: pointer;
+	text-decoration: none;
+  }
+  
+  .dropdown-item:hover {
+	background-color: #f5f5f5;
+  }
+  
+  .dropdown-item.disabled {
+	color: #999;
+	cursor: default;
+  }
+  
+  .dropdown-item.disabled:hover {
+	background-color: transparent;
+  }
+  
+  /* Show dropdown menu when clicked */
+  .dropdown.active .dropdown-menu {
+	display: block;
+  }
+  
+  /* Ensure table doesn't cause horizontal scrolling */
+  .table-responsive {
+	overflow-x: visible;
+  }
+  
+  .action-btns {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+  }
+
+ 
+    .trash-icon {
+        color: #7C869A;
+        transition: color 0.3s ease; /* Smooth transition for hover effect */
+    }
+    .trash-icon:hover {
+        color: white;
+    }
+
+  
+      </style>
+</head>
+
+<body>
+	<!--[if IE]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+    <![endif]-->
+
+	<!--====== PRELOADER PART START ======-->
+
+	<div class="preloader" style="opacity: 0; display: none;">
+		<div class="loader">
+			<div class="ytp-spinner">
+				<div class="ytp-spinner-container">
+					<div class="ytp-spinner-rotator">
+						<div class="ytp-spinner-left">
+							<div class="ytp-spinner-circle"></div>
+						</div>
+						<div class="ytp-spinner-right">
+							<div class="ytp-spinner-circle"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--====== PRELOADER PART ENDS ======-->
+
+	
+
+	<!--====== BANNER PART START ======-->
+	<section class="banner-area bg_cover">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="banner-content">
+						<h1 class="text-white">
+							My Ads
+						</h1>
+						<nav aria-label="breadcrumb">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+								<li class="breadcrumb-item active" aria-current="page">Ads</li>
+							</ol>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--====== BANNER PART END ======-->
+
+	<!--====== DASHBOARD PART START ======-->
+	<section class="dashboard-area pb-110">
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-3 col-lg-4">
+					<div class="left-sidebar-wrapper box-style">
+						<div class="sidebar-header">
+							<div class="image">
+                                <% try { %>
+                                    <% if (user && user.photo && user.photo.url) { %>
+                                        <img src="<%= user.photo.url %>" alt="<%= user.username || 'User' %>" onerror="this.src='/images/default.png'">
+                                    <% } else { %>
+                                        <img src="/images/default.png" alt="Default user">
+                                    <% } %>
+                                <% } catch (e) { %>
+                                    <img src="/images/default.png" alt="Default user">
+                                <% } %>
+                            </div>
+							<div class="info">
+								<h3><%= user.username%></h3>
+								<p class="mb-30"></p>
+							</div>
+						</div>
+
+						<div class="sidebar-menu">
+							<nav>
+								<ul>
+								
+									<li>
+										<a href="/profile"><i class="fa-solid fa-user-tie"></i> Profile Settings</a>
+									</li>
+									
+									<li>
+										<a href="/product/myads" class="active"><i class="fa-solid fa-list-ul"></i>My Ads</a>
+									</li>
+									
+									<li>
+										<a href="/favourites" ><i class="fa-solid fa-heart"></i>Favourites</a>
+									</li>
+									<li>
+										<a href="/privacy"><i class="fa-solid fa-user-lock"></i>Privacy Settings</a>
+									</li>
+									<li>
+                                        <a href="/product/compare"> <i class="fa-regular fa-window-restore"></i>My Comparison</a>
+                                    </li>
+									<li>
+										<a href="/logout"><i class="fa-solid fa-right-from-bracket fa-flip-horizontal"></i>Sign Out</a>
+									</li>
+								</ul>
+							</nav>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-xl-9 col-lg-8">
+					<div class="dashboard-wrapper box-style">
+						<div class="title" id="status">
+							<h3>My Ads</h3>
+						</div>
+
+
+                        
+						<div class="cards-wrapper pb-25 mb-15 border-bottom">
+                            <a href="/product/myads#status" class="ads-btn <%= !filterType ? 'active' : '' %>">
+                              All Ads (<%= totalCount %>)
+                            </a>
+                            <a href="/product/myads?filter=active#status" class="ads-btn <%= filterType === 'active' ? 'active' : '' %>">
+                              Active (<%= activeCount %>)
+                            </a>
+                            <a href="/product/myads?filter=sold#status" class="ads-btn <%= filterType === 'sold' ? 'active' : '' %>">
+                              Sold (<%= soldCount %>)
+                            </a>
+                            
+                          </div>
+                          
+                          <% if (products.length === 0) { %>
+                            <div class="alert alert-info mt-4">
+                              No <%= filterType || 'products' %> found.
+                            </div>
+                          <% } else { %>
+                            <!-- Your existing table code here -->
+                            <div class="table-wrapper table-responsive">
+                              <table class="table">
+                                <!-- Table header and content -->
+                              </table>
+                            </div>
+                          <% } %>
+
+                          
+
+						<div class="table-wrapper table-responsive">
+                            <table class="table">
+                              <thead>
+                                <tr>
+                                  <th>
+                                    Photo
+                                  </th>
+                                  <th>
+                                    Title
+                                  </th>
+                                  <th>
+                                    Category
+                                  </th>
+                                  <th>
+                                    Ad Status
+                                  </th>
+                                  <th>
+                                    Price
+                                  </th>
+                                  <th>
+                                    Action
+                                  </th>
+                                 
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <% products.forEach(product => { %>
+                                  <tr>
+                                    <td>
+                                      <div class="image">
+                                        <% if (product.images && product.images.length > 0) { %>
+                                          <img src="<%= product.images[0].url %>" width="100" alt="<%= product.title %>">
+                                        <% } else { %>
+                                          <img src="assets/images/default-product.jpg" width="100" alt="No Image">
+                                        <% } %>
+                                      </div>
+                                    </td>
+                                    <td>
+                                      <h6><%= product.title %></h6>
+                                      <span class="ad-id">Ad ID: <%= product.id %></span>
+                                    </td>
+                                    <td>
+                                      <span class="category"><%= product.categoryID.type || "N/A" %></span>
+                                    </td>
+                                    <td>
+                                      <span class="status-btn <%= product.isSold ? 'status-sold' : 'status-active' %>">
+                                        <%= product.isSold ? "SOLD" : "ACTIVE" %>
+                                      </span>
+                                    </td>
+                                    <td>
+                                      <p>₹ <%= product.price ? product.price.toLocaleString("en-IN") : "N/A" %></p>
+                                    </td>
+                                    <td>
+										<div class="action-btns">
+										  <a href="/product/<%= product.id %>" class="eye-btn"><i class="lni lni-eye"></i></a>
+										  
+										  <% if (currUser && product.userID._id.toString() === currUser._id.toString()) { %>
+											<a href="/product/<%= product.id %>/edit" class="edit-btn"><i class="lni lni-pencil"></i></a>
+											
+											<!-- Delete Button -->
+											<a href="javascript:void(0)" class="delete-btn">							
+											<form method="post" action="/product/<%= product.id %>/delete?_method=DELETE" style="display:inline;">
+												<button type="submit" class="delete-btn" style="border: none; background: none; padding: 0; margin: 0; outline: none;">
+													<i class="lni lni-trash trash-icon"></i>
+												</button>
+											</form>
+											</a>
+											<!-- Three-dot menu for Mark as Sold -->
+											<div class="dropdown">
+											  <button type="button" class="three-dots-btn">⋮</button>
+											  <div class="dropdown-menu">
+												<% if (!product.isSold) { %>
+												  <form method="post" action="/product/<%= product._id %>/sold?_method=PUT">
+													<button type="submit" class="dropdown-item sold-btn">
+													  <i class="lni lni-checkmark-circle"></i> Mark as Sold
+													</button>
+												  </form>
+												<% } else { %>
+												  <span class="dropdown-item sold-status disabled">
+													<i class="lni lni-check-mark-circle"></i> Sold
+												  </span>
+												<% } %>
+											  </div>
+											</div>
+										  <% } %>
+										</div>
+									  </td>
+                                  </tr>
+                                <% }) %>
+                              </tbody>
+                            </table>
+                          </div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--====== DASHBOARD PART END ======-->
+
+
+
+	<!--====== BACK TOP TOP PART START ======-->
+	<a href="#" class="back-to-top btn-hover"><i class="lni lni-chevron-up" style="margin-top: 11px;"></i></a>
+	<!--====== BACK TOP TOP PART ENDS ======-->
+
+
+	<!--====== Bootstrap js ======-->
+	<script src="assets/js/bootstrap.bundle-5.0.0.alpha-min.js"></script>
+
+	<!--====== Tiny slider js ======-->
+	<script src="assets/js/tiny-slider.js"></script>
+
+	<!--====== wow js ======-->
+	<script src="assets/js/wow.min.js"></script>
+
+	<!--====== glightbox js ======-->
+	<script src="assets/js/glightbox.min.js"></script>
+
+	<!--====== Selectr js ======-->
+	<script src="assets/js/selectr.min.js"></script>
+
+	<!--====== Nouislider js ======-->
+	<script src="assets/js/nouislider.js"></script>
+
+	<!--====== Main js ======-->
+	<script src="assets/js/main.js"></script>
+
+	<script>
+	// Add this to your JavaScript file or in a script tag at the bottom of the page
+document.addEventListener('DOMContentLoaded', function() {
+	const dropdownToggles = document.querySelectorAll('.three-dots-btn');
+	
+	dropdownToggles.forEach(toggle => {
+	  toggle.addEventListener('click', function(e) {
+		e.stopPropagation();
+		
+		// Close all other open dropdowns
+		document.querySelectorAll('.dropdown.active').forEach(dropdown => {
+		  if (dropdown !== this.parentElement) {
+			dropdown.classList.remove('active');
+		  }
+		});
+		
+		// Toggle the clicked dropdown
+		this.parentElement.classList.toggle('active');
+	  });
+	});
+	
+	// Close dropdowns when clicking elsewhere on the page
+	document.addEventListener('click', function() {
+	  document.querySelectorAll('.dropdown.active').forEach(dropdown => {
+		dropdown.classList.remove('active');
+	  });
+	});
+  });
+</script>
+
+   
+<script> 
+    window.onscroll = function () {
+        const header = document.getElementById("header_navbar");
+        const sticky = header.offsetTop;
+    
+        if (window.pageYOffset > sticky) {
+            header.classList.add("sticky");
+        } else {
+            header.classList.remove("sticky");
+        }
+    };
+</script>
+
+</body></html>

@@ -1,0 +1,396 @@
+<% layout("/layouts/boilerplate") %>
+
+
+<body>
+    <div class="container mt-5">
+        <h2>Edit Product</h2>
+        <form action="/product/<%= product._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+            <!-- General Product Fields -->
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="form-control" id="title" name="title" value="<%= product.title %>" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" name="description" rows="3"
+                    required><%= product.description %></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <input type="number" class="form-control" id="price" name="price" value="<%= product.price %>" required>
+            </div>
+
+            <!-- Category  -->
+
+            <div class="mb-3">
+                <label for="categoryID" class="form-label">Category</label>
+                <input type="text" class="form-control" id="categoryID" name="categoryID"
+                    value="<%= product.categoryID.type %>" readonly />
+            </div>
+
+            <!-- Category-Specific Fields -->
+            <% if (product.categoryID.type==="car/bike" && categoryDetails) { %>
+                <div class="mb-3">
+                    <label for="brandName" class="form-label">Brand Name</label>
+                    <input type="text" class="form-control" id="brandName" name="brandName"
+                        value="<%= categoryDetails.brandName %>" required>
+                </div>
+                <div class="mb-3">
+                    <label for="modelName" class="form-label">Model Name</label>
+                    <input type="text" class="form-control" id="modelName" name="modelName"
+                        value="<%= categoryDetails.modelName %>" required>
+                </div>
+                <div class="mb-3">
+                    <label for="variantName" class="form-label">Variant Name</label>
+                    <input type="text" class="form-control" id="variantName" name="variantName"
+                        value="<%= categoryDetails.variantName %>" required>
+                </div>
+                <div class="mb-3">
+                    <label for="year" class="form-label">Year</label>
+                    <input type="number" class="form-control" id="year" name="year" value="<%= categoryDetails.year %>"
+                        required>
+                </div>
+                <div class="mb-3">
+                    <label for="kmDrived" class="form-label">KM Drived</label>
+                    <input type="number" class="form-control" id="kmDrived" name="kmDrived"
+                        value="<%= categoryDetails.kmDrived %>" required>
+                </div>
+                <div class="mb-3">
+                    <label for="fuel" class="form-label">Fuel Type</label>
+                    <input type="text" class="form-control" id="fuel" name="fuel" value="<%= categoryDetails.fuel %>"
+                        required>
+                </div>
+                <div class="mb-3">
+                    <label for="transmission" class="form-label">Transmission</label>
+                    <input type="text" class="form-control" id="transmission" name="transmission"
+                        value="<%= categoryDetails.transmission %>" required>
+                </div>
+                <div class="mb-3">
+                    <label for="age" class="form-label">Age</label>
+                    <input type="number" class="form-control" id="age" name="age" value="<%= categoryDetails.age %>"
+                        required>
+                </div>
+                <div class="mb-3">
+                    <label for="owners" class="form-label">no. of Owners</label>
+                    <input type="number" class="form-control" id="noOfOwners" name="noOfOwners"
+                        value="<%= categoryDetails.noOfOwners %>" required>
+                </div>
+
+                <% } else if (product.categoryID.type==="electronics" && categoryDetails) { %>
+                    <div class="mb-3">
+                        <label for="brandName" class="form-label">Brand Name</label>
+                        <input type="text" class="form-control" id="brandName" name="brandName"
+                            value="<%= categoryDetails.brandName %>" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="modelName" class="form-label">Model Name</label>
+                        <input type="text" class="form-control" id="modelName" name="modelName"
+                            value="<%= categoryDetails.modelName %>" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="year" class="form-label">Year</label>
+                        <input type="number" class="form-control" id="year" name="year"
+                            value="<%= categoryDetails.year %>" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="warranty" class="form-label">Warranty</label>
+                        <input type="text" class="form-control" id="warranty" name="warranty"
+                            value="<%= categoryDetails.warranty %>" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="age" class="form-label">Condition</label>
+                        <select class="form-control" id="age" name="categoryData[age]" required>
+                            <option value="">Select condition</option>
+                            <option value="1" <%=categoryDetails.age==='1' || categoryDetails.age===1 ? 'selected' : ''
+                                %>>1yr old</option>
+                            <option value="2" <%=categoryDetails.age==='2' || categoryDetails.age===2 ? 'selected' : ''
+                                %>>2yr old</option>
+                            <option value="3" <%=categoryDetails.age==='3' || categoryDetails.age===3 ? 'selected' : ''
+                                %>>3yr old</option>
+                            <option value="4" <%=categoryDetails.age==='4' || categoryDetails.age===4 ? 'selected' : ''
+                                %>>4yr old</option>
+                            <option value="5" <%=categoryDetails.age==='5' || categoryDetails.age===5 ? 'selected' : ''
+                                %>>4+yr old</option>
+                        </select>
+                    </div>
+
+
+
+                    <% } else if (product.categoryID.type==="pet" && categoryDetails) { %>
+                        <div class="mb-3">
+                            <label for="type" class="form-label">Pet Type</label>
+                            <select class="form-control" id="type" name="categoryData[type]" required>
+                                <option value="dogs" <%=categoryDetails.type==='dogs' ? 'selected' : '' %>>Dogs</option>
+                                <option value="cats" <%=categoryDetails.type==='cats' ? 'selected' : '' %>>Cats</option>
+                                <option value="fishes & aquarium" <%=categoryDetails.type==='fishes & aquarium'
+                                    ? 'selected' : '' %>>Fishes & Aquarium</option>
+                                <option value="birds" <%=categoryDetails.type==='birds' ? 'selected' : '' %>>Birds
+                                </option>
+                                <option value="others" <%=categoryDetails.type==='others' ? 'selected' : '' %>>Others
+                                </option>
+                            </select>
+                        </div>
+
+
+                        <% } else if (product.categoryID.type==="property" && categoryDetails) { %>
+                            <div class="mb-3">
+                                <label for="type" class="form-label">Property Type</label>
+                                <div class="radio-inputs">
+                                    <label class="radio">
+                                        <input type="radio" name="categoryData[type]" value="apartment"
+                                            <%=categoryDetails.type==='apartment' ? 'checked' : '' %>>
+                                        <span class="name">Apartment</span>
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="categoryData[type]" value="villa"
+                                            <%=categoryDetails.type==='villa' ? 'checked' : '' %>>
+                                        <span class="name">Villa</span>
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="categoryData[type]" value="independent house"
+                                            <%=categoryDetails.type==='independent house' ? 'checked' : '' %>>
+                                        <span class="name">Independent House</span>
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="categoryData[type]" value="plot"
+                                            <%=categoryDetails.type==='plot' ? 'checked' : '' %>>
+                                        <span class="name">Plot</span>
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="categoryData[type]" value="commercial"
+                                            <%=categoryDetails.type==='commercial' ? 'checked' : '' %>>
+                                        <span class="name">Commercial</span>
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="categoryData[type]" value="other"
+                                            <%=categoryDetails.type==='other' ? 'checked' : '' %>>
+                                        <span class="name">Other</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="bhk" class="form-label">BHK</label>
+                                <div class="radio-inputs">
+                                    <label class="radio">
+                                        <input type="radio" name="categoryData[bhk]" value="1"
+                                            <%=categoryDetails.bhk===1 ? 'checked' : '' %>>
+                                        <span class="name">1</span>
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="categoryData[bhk]" value="2"
+                                            <%=categoryDetails.bhk===2 ? 'checked' : '' %>>
+                                        <span class="name">2</span>
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="categoryData[bhk]" value="3"
+                                            <%=categoryDetails.bhk===3 ? 'checked' : '' %>>
+                                        <span class="name">3</span>
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="categoryData[bhk]" value="4"
+                                            <%=categoryDetails.bhk===4 ? 'checked' : '' %>>
+                                        <span class="name">4</span>
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="categoryData[bhk]" value="5"
+                                            <%=categoryDetails.bhk===5 ? 'checked' : '' %>>
+                                        <span class="name">5+</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="bathrooms" class="form-label">Bathrooms</label>
+                                <div class="radio-inputs">
+                                    <label class="radio">
+                                        <input type="radio" name="categoryData[bathrooms]" value="1"
+                                            <%=categoryDetails.bathrooms===1 ? 'checked' : '' %>>
+                                        <span class="name">1</span>
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="categoryData[bathrooms]" value="2"
+                                            <%=categoryDetails.bathrooms===2 ? 'checked' : '' %>>
+                                        <span class="name">2</span>
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="categoryData[bathrooms]" value="3"
+                                            <%=categoryDetails.bathrooms===3 ? 'checked' : '' %>>
+                                        <span class="name">3</span>
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="categoryData[bathrooms]" value="4"
+                                            <%=categoryDetails.bathrooms===4 ? 'checked' : '' %>>
+                                        <span class="name">4</span>
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="categoryData[bathrooms]" value="5"
+                                            <%=categoryDetails.bathrooms===5 ? 'checked' : '' %>>
+                                        <span class="name">5+</span>
+                                    </label>
+                                </div>
+                            </div>
+
+
+                            <div class="mb-3">
+                                <label for="furnishing" class="form-label">Furnishing</label>
+                                <div class="radio-inputs">
+                                    <label class="radio">
+                                        <input type="radio" name="categoryData[furnishing]" value="furnished"
+                                            <%=categoryDetails.furnishing==='furnished' ? 'checked' : '' %>>
+                                        <span class="name">Furnished</span>
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="categoryData[furnishing]" value="semi-furnished"
+                                            <%=categoryDetails.furnishing==='semi-furnished' ? 'checked' : '' %>>
+                                        <span class="name">Semi-Furnished</span>
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="categoryData[furnishing]" value="unfurnished"
+                                            <%=categoryDetails.furnishing==='unfurnished' ? 'checked' : '' %>>
+                                        <span class="name">Unfurnished</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="area_sqft" class="form-label">Area (in sq. ft)</label>
+                                <input type="number" class="form-control" id="areaSqft" name="categoryData[areaSqft]"
+                                    value="<%= categoryDetails.areaSqft %>" required min="0">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="carpet_area_sqft" class="form-label">Carpet Area (in sq. ft)</label>
+                                <input type="number" class="form-control" id="carpetAreaSqft"
+                                    name="categoryData[carpetAreaSqft]" value="<%= categoryDetails.carpetAreaSqft %>"
+                                    min="0">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="total_floors" class="form-label">Total Floors</label>
+                                <input type="number" class="form-control" id="totalFloors"
+                                    name="categoryData[totalFloors]" value="<%= categoryDetails.totalFloors %>" required
+                                    min="1">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="bachelors_allowed" class="form-label">Bachelors Allowed</label>
+                                <div class="radio-inputs">
+                                    <label class="radio">
+                                        <input type="radio" name="categoryData[bachelorsAllowed]" value="true"
+                                            <%=categoryDetails.bachelorsAllowed===true ? 'checked' : '' %>>
+                                        <span class="name">Yes</span>
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="categoryData[bachelorsAllowed]" value="false"
+                                            <%=categoryDetails.bachelorsAllowed===false ? 'checked' : '' %>>
+                                        <span class="name">No</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="car_parking_space" class="form-label">Car Parking Space</label>
+                                <div class="radio-inputs">
+                                    <label class="radio">
+                                        <input type="radio" name="categoryData[carParkingSpace]" value="1"
+                                            <%=categoryDetails.carParkingSpace===1 ? 'checked' : '' %>>
+                                        <span class="name">1</span>
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="categoryData[carParkingSpace]" value="2"
+                                            <%=categoryDetails.carParkingSpace===2 ? 'checked' : '' %>>
+                                        <span class="name">2</span>
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="categoryData[carParkingSpace]" value="3"
+                                            <%=categoryDetails.carParkingSpace===3 ? 'checked' : '' %>>
+                                        <span class="name">3</span>
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="categoryData[carParkingSpace]" value="0"
+                                            <%=categoryDetails.carParkingSpace===0 ? 'checked' : '' %>>
+                                        <span class="name">No Parking</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="facing" class="form-label">Facing</label>
+                                <select id="facing" name="categoryData[facing]" class="form-control">
+                                    <option value="" <%=!categoryDetails.facing ? 'selected' : '' %>>Select Facing
+                                    </option>
+                                    <option value="north" <%=categoryDetails.facing==='north' ? 'selected' : '' %>>North
+                                    </option>
+                                    <option value="south" <%=categoryDetails.facing==='south' ? 'selected' : '' %>>South
+                                    </option>
+                                    <option value="east" <%=categoryDetails.facing==='east' ? 'selected' : '' %>>East
+                                    </option>
+                                    <option value="west" <%=categoryDetails.facing==='west' ? 'selected' : '' %>>West
+                                    </option>
+                                    <option value="northeast" <%=categoryDetails.facing==='northeast' ? 'selected' : ''
+                                        %>>Northeast</option>
+                                    <option value="northwest" <%=categoryDetails.facing==='northwest' ? 'selected' : ''
+                                        %>>Northwest</option>
+                                    <option value="southeast" <%=categoryDetails.facing==='southeast' ? 'selected' : ''
+                                        %>>Southeast</option>
+                                    <option value="southwest" <%=categoryDetails.facing==='southwest' ? 'selected' : ''
+                                        %>>Southwest</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="want_to_sell" class="form-label">Want to </label>
+                                <select id="facing" name="categoryData[type2]" class="form-control">
+                                    <option value="" <%=!categoryDetails.type2 ? 'selected' : '' %>>Select Type</option>
+                                    <option value="north" <%=categoryDetails.type2==='rent' ? 'selected' : '' %>>Rent
+                                    </option>
+                                    <option value="south" <%=categoryDetails.type2==='sell' ? 'selected' : '' %>>Sell
+                                    </option>
+
+                                </select>
+                            </div>
+
+                            <% } else if (product.categoryID.type==="fashion" && categoryDetails) { %>
+                                <div class="mb-3">
+                                    <label for="type" class="form-label">Type</label>
+                                    <select class="form-control" id="type" name="categoryData[type]" required>
+                                        <option value="men" <%=categoryDetails.type==='men' ? 'selected' : '' %>>Men
+                                        </option>
+                                        <option value="women" <%=categoryDetails.type==='women' ? 'selected' : '' %>
+                                            >Women</option>
+                                        <option value="kids" <%=categoryDetails.type==='kids' ? 'selected' : '' %>>Kids
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <% } else if (product.categoryID.type==="other" && categoryDetails) { %>
+                                    <div class="mb-3">
+                                        <label for="type" class="form-label">Type</label>
+                                        <select class="form-control" id="type" name="categoryData[type]" required>
+                                            <option value="books" <%=categoryDetails.type==='books' ? 'selected' : '' %>
+                                                >Books</option>
+                                            <option value="musical equipments"
+                                                <%=categoryDetails.type==='musical equipments' ? 'selected' : '' %>
+                                                >Musical Equipments</option>
+                                            <option value="sports equipments"
+                                                <%=categoryDetails.type==='sports equipments' ? 'selected' : '' %>
+                                                >Sports Equipments</option>
+                                            <option value="gym & fitness" <%=categoryDetails.type==='gym & fitness'
+                                                ? 'selected' : '' %>>Gym & Fitness</option>
+                                            <option value="others" <%=categoryDetails.type==='others' ? 'selected' : ''
+                                                %>>others</option>
+                                        </select>
+                                    </div>
+                                    <% } %>
+
+
+                                        <!-- Submit Button -->
+                                        <button type="submit" class="btn btn-primary">Update Product</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

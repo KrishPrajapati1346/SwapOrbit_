@@ -1,0 +1,496 @@
+
+
+<html class="no-js" lang="en">
+   
+<head>
+	<meta charset="utf-8">
+
+	<!--====== Title ======-->
+	<title>SwapOrbit</title>
+
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!--====== Favicon Icon ======-->
+	<link rel="shortcut icon" href="/images/favicon.png" type="image/png">
+
+	<!--====== Animate CSS ======-->
+	<link rel="stylesheet" href="/css/animate.css">
+
+	<!--====== Tiny slider CSS ======-->
+	<link rel="stylesheet" href="/css/tiny-slider.css">
+
+	<!--====== glightbox CSS ======-->
+	<link rel="stylesheet" href="/css/glightbox.min.css">
+
+	<!--====== Line Icons CSS ======-->
+	<link rel="stylesheet" href="/css/LineIcons.2.0.css">
+
+	<!--====== Selectr CSS ======-->
+	<link rel="stylesheet" href="/css/selectr.css">
+
+	<!--====== Nouislider CSS ======-->
+	<link rel="stylesheet" href="/css/nouislider.css">
+
+	<!--====== Bootstrap CSS ======-->
+	<link rel="stylesheet" href="/css/bootstrap-5.0.5-alpha.min.css">
+
+	<!--====== Style CSS ======-->
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+	<!-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> -->
+    <style>
+        .search::before,
+        .search::after {
+            content: none !important;
+        
+        }
+
+
+
+	/* Footer design */
+
+		  
+		  a {
+			text-decoration: none;
+			color: #9ca3af;
+			transition: color 0.3s;
+		  }
+		  
+		  a:hover {
+			color: #ffffff;
+		  }
+		  
+		  ul {
+			list-style: none;
+		  }
+		  
+		
+		  /* Footer Styles */
+		  footer {
+			background-color: #1a202c;
+			
+			color: #d1d5db;
+		  }
+		  
+		  .footer-content {
+			padding: 4rem 1rem 1.5rem;
+		  }
+		  
+		  .footer-grid {
+			display: grid;
+			grid-template-columns: 1fr;
+			gap: 2.5rem;
+		  }
+		  
+		  /* About Section */
+		  .footer-about {
+			margin-bottom: 1rem;
+		  }
+		  
+		  .footer-title {
+			color: #ffffff;
+			font-size: 1.25rem;
+			font-weight: 700;
+			margin-bottom: 1rem;
+		  }
+		  
+		  .footer-about p {
+			color: #9ca3af;
+			margin-bottom: 1rem;
+		  }
+		  
+		  .social-icons {
+			display: flex;
+			gap: 1rem;
+			margin-top: 1rem;
+		  }
+		  
+		  .social-icon {
+			width: 2.5rem;
+			height: 2.5rem;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transition: background-color 0.3s;
+		  }
+		  
+		  .social-icon svg {
+			width: 1.25rem;
+			height: 1.25rem;
+		  }
+		  
+		  .facebook {
+			background-color: #2563eb;
+		  }
+		  
+		  .facebook:hover {
+			background-color: #1d4ed8;
+		  }
+		  
+		  .twitter {
+			background-color: #60a5fa;
+		  }
+		  
+		  .twitter:hover {
+			background-color: #3b82f6;
+		  }
+		  
+		  .instagram {
+			background-color: #db2777;
+		  }
+		  
+		  .instagram:hover {
+			background-color: #be185d;
+		  }
+		  
+		  .linkedin {
+			background-color: #1e40af;
+		  }
+		  
+		  .linkedin:hover {
+			background-color: #1e3a8a;
+		  }
+		  
+		  /* Quick Links */
+		  .footer-links h3 {
+			color: #ffffff;
+			font-size: 1.125rem;
+			font-weight: 600;
+			margin-bottom: 1rem;
+		  }
+		  
+		  .footer-links li {
+			margin-bottom: 0.5rem;
+		  }
+		  
+		  /* Contact Info */
+		  .footer-contact h3 {
+			color: #ffffff;
+			font-size: 1.125rem;
+			font-weight: 600;
+			margin-bottom: 1rem;
+		  }
+		  
+		  .contact-item {
+			display: flex;
+			align-items: flex-start;
+			margin-bottom: 0.75rem;
+		  }
+		  
+		  .contact-icon {
+			width: 1.25rem;
+			height: 1.25rem;
+			margin-right: 0.75rem;
+			color: #60a5fa;
+			flex-shrink: 0;
+			margin-top: 0.125rem;
+		  }
+		  
+		  /* Download App */
+		  .footer-app h3 {
+			color: #ffffff;
+			font-size: 1.125rem;
+			font-weight: 600;
+			margin-bottom: 1rem;
+		  }
+		  
+		  .footer-app p {
+			color: #9ca3af;
+			margin-bottom: 1rem;
+		  }
+		  
+		  .app-buttons {
+			display: flex;
+			flex-direction: column;
+			gap: 0.75rem;
+		  }
+		  
+		  .app-button img {
+			height: 2.5rem;
+		  }
+		  
+		  /* Copyright */
+		  .copyright {
+			border-top: 1px solid #374151;
+			margin-top: 3rem;
+			padding-top: 2rem;
+			padding-bottom: 1rem;
+			text-align: center;
+		  }
+		  
+		  .copyright-content {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 1rem;
+		  }
+		  
+		  .copyright-links {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+		  }
+		  
+		  .copyright-links a {
+			margin: 0 0.75rem;
+		  }
+		  
+		  /* Media Queries */
+		  @media (min-width: 768px) {
+			.footer-grid {
+			  grid-template-columns: repeat(2, 1fr);
+			}
+			
+			.copyright-content {
+			  flex-direction: row;
+			  justify-content: space-between;
+			}
+			
+			.copyright-links {
+			  margin-top: 0;
+			}
+		  }
+		  
+		  @media (min-width: 1024px) {
+			.footer-grid {
+			  grid-template-columns: repeat(4, 1fr);
+			}
+		  }
+
+
+
+
+		
+	
+
+
+    </style>
+    
+	
+</head>
+<body>
+
+   
+    <div class="conatiner">
+      
+
+        <%- body %>
+
+
+
+        <!--====== HEADER PART START ======-->
+
+	<header class="header_area">
+		<div id="header_navbar" class="header_navbar">
+			<div class="container position-relative">
+				<div class="row align-items-center">
+					<div class="col-xl-12">
+						<nav class="navbar navbar-expand-lg">
+							<a class="navbar-brand" href="/product">
+								<!-- <img id="logo" src="/images/logo/logo-2.svg" alt="Logo"> -->
+								<img id="logo" src="/images/logo/logo8.png" alt="Logo">
+							</a>
+							<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+								aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+								<span class="toggler-icon"></span>
+								<span class="toggler-icon"></span>
+								<span class="toggler-icon"></span>
+							</button>
+							<div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+								<ul id="nav" class="navbar-nav">
+									<li class="nav-item">
+										<a class="page-scroll active" href="/product"> <i class="fa-solid fa-house "></i> &nbsp;Home</a>
+									</li>
+									
+									<li class="nav-item">
+										<a class="page-scroll" href="/category">
+                                            <i class="fa-solid fa-layer-group"></i> &nbsp;Categories</a>
+									</li>
+									<li class="nav-item">
+										<a class="page-scroll" href="/about"> <i class="fa-solid fa-globe"></i> &nbsp;About </a>
+									</li>
+								</ul>
+							</div>
+
+  
+
+							<ul class="header-btn d-md-flex">
+                                <li>
+                                <a href="/product#search-section" class="main-btn account-btn search">
+                                    <span><i class="fa-solid fa-magnifying-glass"></i> &nbsp;Search</span>
+                                </a>
+                                </li>
+
+								<% if (currUser) { %>
+									<!-- My Account Dropdown -->
+
+									
+								<li>
+									<a href="#" class="main-btn account-btn">
+										<span class="d-md-none"><i class="lni lni-user"></i></span>
+										<span class="d-none d-md-block"><i class="fa-solid fa-user" style="color:#ff6b6b;"></i>  &nbsp;My Account</span>
+									</a>
+									<ul class="dropdown-nav">
+										<!-- <li><a href="dashboard.html">Dashboard</a></li> -->
+										<li><a href="/profile"><i class="fa-solid fa-user-tie"></i> &nbsp;Profile Settings</a></li>
+										<!-- <li><a href="/product/newProduct">Post Ad</a></li> -->
+										<li><a href="/product/myads"><i class="fa-solid fa-list-ul"></i> &nbsp;My Ads</a></li>
+										<!-- <li><a href="offers.html">Offers/Messages</a></li> -->
+										<!-- <li><a href="payments.html">Payments</a></li> -->
+										<li><a href="/favourites"><i class="fa-solid fa-heart"></i> &nbsp;Favourites</a></li>
+										<li><a href="/privacy"><i class="fa-solid fa-user-lock"></i> &nbsp;Privacy Settings</a></li>
+										<li><a href="/product/compare"> <i class="fa-regular fa-window-restore"></i> &nbsp;My Comparison</a></li>
+										<li><a href="/logout"><i class="fa-solid fa-right-from-bracket fa-flip-horizontal"></i> &nbsp;Sign Out</a></li>
+									</ul>
+								</li>
+								<li>
+									<a href="/product/newProduct" class="main-btn btn-hover d-none d-md-block"><i class="fa-solid fa-plus"></i> &nbsp;Post an Ad</a>
+								</li>
+
+								<% } else { %>
+									<!-- Login Option -->
+									<li>
+										<a href="/login" class="main-btn account-btn">
+										<span class="d-md-none"><i class="lni lni-user"></i></span>
+										<span class="d-none d-md-block"><i class="fa-solid fa-right-to-bracket" style="color: #ff6b6b;"></i> &nbsp;Login</span>
+										</a>
+									</li>
+									<% } %>
+
+							</ul>
+						</nav> <!-- navbar -->
+					</div>
+				</div> <!-- row -->
+			</div> <!-- container -->
+		</div> <!-- header navbar -->
+	</header>
+
+	<!--====== HEADER PART ENDS ======-->
+
+
+
+
+        <%- include("../includes/flash.ejs")%>
+
+<!--====== FOOTER PART START ======-->
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-grid">
+          <!-- About Section -->
+          <div class="footer-about">
+            <h3 class="footer-title">SwapOrbit</h3>
+			
+            <p>
+              SwapOrbit is the premier marketplace for buying and selling everything from vehicles to real estate and more. Join millions of users who trust our platform.
+            </p>
+            <div class="social-icons">
+              <a href="#" class="social-icon facebook">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+              </a>
+              <a href="#" class="social-icon twitter">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
+              </a>
+              <a href="#" class="social-icon instagram">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+              </a>
+              <a href="#" class="social-icon linkedin">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Quick Links -->
+          <div class="footer-links">
+            <h3>Quick Links</h3>
+            <ul>
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Contact Us</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Terms & Conditions</a></li>
+              <li><a href="#">FAQs & Help</a></li>
+            </ul>
+          </div>
+
+          <!-- Contact Info -->
+          <div class="footer-contact">
+            <h3>Contact Us</h3>
+            <ul>
+              <li class="contact-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <span>Vadodara, India</span>
+              </li>
+              <li class="contact-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                <span>+91 70234 55900</span>
+              </li>
+              <li class="contact-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+                <span>info@swaporbit.com</span>
+              </li>
+              <li class="contact-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+                <span>www.swaporbit.com</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Download App -->
+          <div class="footer-app">
+            <h3>Download App</h3>
+            <p>Get our mobile app for a better experience</p>
+            <div class="app-buttons">
+			  <a href="#" class="app-button">
+				<img 
+				  src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Download_on_the_App_Store_Badge.svg/1280px-Download_on_the_App_Store_Badge.svg.png" 
+				  alt="App Store" 
+				  class="h-10"
+				/>
+			  </a>
+			  <a href="#" class="app-button">
+				<img 
+				  src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/1280px-Google_Play_Store_badge_EN.svg.png" 
+				  alt="Google Play" 
+				  class="h-10"
+				/>
+			  </a>
+
+            </div>
+          </div>
+        </div>
+        
+        <!-- Copyright -->
+        <div class="copyright">
+          <div class="copyright-content">
+            <p>© 2025 SwapOrbit. All rights reserved.</p>
+            <div class="copyright-links">
+              <a href="#">Privacy</a>
+              <a href="#">Terms</a>
+              <a href="#">Support</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  
+	  <!--====== FOOTER PART ENDS ======-->
+  
+    </div>
+
+   
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="/js/script.js"></script>
+	
+    
+</body>
+</html>
