@@ -123,9 +123,7 @@ const CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 passport.use(new GoogleStrategy({
     clientID: CLIENT_ID,
     clientSecret: CLIENT_SECRET,
-    callbackURL: process.env.NODE_ENV === "production" 
-        ? "https://project-ln3i.onrender.com/auth/google/callback" 
-        : "http://localhost:8080/auth/google/callback"
+    callbackURL: process.env.GOOGLE_CALLBACK_URL || "http://localhost:8080/auth/google/callback"
 },
 async function(accessToken, refreshToken, profile, done) {
   try {
